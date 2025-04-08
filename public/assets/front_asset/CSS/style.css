@@ -1,0 +1,183 @@
+:root {
+    --br-color: #012970;
+    --or-color: #ff9d33;
+    --wt-color: #ffffff;
+}
+
+body {
+    font-family: "Poppins", serif !important;
+    background-image: url("../image/bg-login.png") !important;
+}
+
+/* style general */
+.tagline {
+    font-weight: 700;
+}
+
+span {
+    color: var(--or-color);
+}
+
+.sub-tagline {
+}
+
+/* end */
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.nav-item {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.herro-tagline {
+    font-weight: 500;
+    font-size: 40px;
+    padding-bottom: 23px;
+    line-weight: ;
+    padding-bottom: 8px;
+    width: 85%;
+}
+
+.sub-herro-tagline {
+    padding-top: 8px;
+    font-weight: 400;
+    font-size: 20px;
+    width: 85%;
+}
+
+.button-secoundary {
+    background-color: var(--or-color);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    margin-top: 49px;
+    width: 270px;
+    height: 60px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* khusus page login */
+.page-login {
+    background-image: url("../image/bg-login.png") !important ;
+    height: auto !important;
+}
+
+.button-login {
+    width: 470px;
+    height: 55px;
+    background-color: var(--br-color);
+    color: var(--wt-color);
+    border-radius: 10px;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.button-login:hover {
+    background-color: #4a69bb;
+    color: white;
+}
+
+label {
+    font-size: 20px;
+}
+
+input {
+    height: 60px;
+    width: 470px !important;
+}
+
+/* end */
+
+.box-area {
+}
+
+.header-font-style {
+    color: #012970;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 35px;
+}
+
+.sub-header-font-style {
+    color: #ff9d33;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 15px;
+}
+
+.button-masuk {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--br-color);
+    color: var(--wt-color);
+    font-weight: 700;
+    font-size: 20px;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    text-decoration: none;
+}
+
+/* Efek hover */
+.button-masuk:hover {
+    background-color: #4a69bb;
+    color: white;
+}
+
+/* section herro */
+#herro {
+    background-image: url("../image/bg-herro.png") !important ;
+    padding: 30px 30px;
+}
+/* section service */
+#service {
+    padding: 100px 50px;
+}
+
+/*section reason */
+.sub-reason h1 {
+    font-size: 100px;
+    width: 80%;
+}
+
+/* tentang kami */
+#about {
+    padding: 50px 50px;
+}
+.tag-about {
+    color: var(--br-color);
+    position: relative;
+}
+
+.tag-about::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 35%;
+    height: 3px;
+    background-color: var(--or-color);
+}
+
+.sub-about {
+    font-weight: 400;
+    font-size: 25px;
+    text-align: justify;
+}
+
+/* footer */
+footer {
+    background-color: var(--br-color);
+    text-align: center;
+    padding: 10px 0;
+    font-weight: 400;
+    font-size: 15px;
+}
