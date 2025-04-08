@@ -1,0 +1,35 @@
+.container {
+    padding: 50px;
+    padding-top: 10px;
+}
+  .row{
+    margin-top: 20px;
+    text-align: justify;
+  }
+  
+  .garis1{
+    border-top:3px solid black;
+    height: 2px;
+    border-bottom:1px solid black;
+  }
+  img{
+    margin-right: 30px;
+  }
+  #tempat-tgl{
+    padding-top: 20px;
+    margin-left:30px;
+  }
+
+  .kapital {
+    text-transform: uppercase;
+  }
+  #kepsek{
+    text-align:left;
+    padding-top: 30px;
+    padding-left: 60%;
+  }
+  #nama-kepsek{
+    margin-top:100px;
+    text-align:left;
+    padding-left: 60%;
+  }
