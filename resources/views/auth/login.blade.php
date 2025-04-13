@@ -13,6 +13,7 @@
     <!-- link style css -->
     <link rel="stylesheet" href="{{ asset('assets/front_asset/CSS/style.css') }}">
     <!-- link booststrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('bootstrap-5.3.3-dist/css/bootstrap.min.css') }}">
     <title>login</title>
 </head>
@@ -38,16 +39,32 @@
 
                             </div>
                             {{-- input password --}}
-                            <div class="mb-3">
-                                <label for="password" :value="('Password')"  class="form-label">Password</label>
+                            <div class="mb-3 position-relative">
+                                <label for="password" class="form-label">Password</label>
                                 <input type="password" id="password" name="password" class="form-control">
+                                <i class="bi bi-eye-slash toggle-password"
+                                    style="position: absolute; top: 55px; right: 30px; cursor: pointer;"></i>
                             </div>
+                            {{-- button --}}
                             <button type="submit" class="button-login">Masuk</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            const togglePassword = document.querySelector('.toggle-password');
+            const passwordInput = document.querySelector('#password');
+
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+        </script>
+
 </body>
 
 </html>
