@@ -1,64 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- font google popins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <!-- link style css -->
-    <link rel="stylesheet" href="{{ asset('assets/front_asset/CSS/style.css') }}">
-    <!-- link booststrap -->
-    <link rel="stylesheet" href="{{ asset('bootstrap-5.3.3-dist/css/bootstrap.min.css') }}">
-    <script src="{{ asset('bootstrap-5.3.3-dist/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js') }}"></script>
-    <link href="{{ asset('assets/front_asset/image/blue washing machine.png') }}" rel="icon">
-    <title>landing page</title>
-</head>
-
-<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm p-3">
-    <div class="container">
-        <a class="navbar-brand" href="#">Almuna Laundry</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
-                <li class="nav-item mx-3">
-                    <a class="nav-link" href="index.html">Beranda</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link" href="lacak_status.html">Lacak Status</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link" href="tentang_kami.html">Tentang Kami</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <a href="{{ route('login') }}" class="button-masuk">Masuk</a>
-        </div>
-    </div>
-</nav>
-
-<body>
+@extends('layouts.pelanggan.master')
+@section('title', 'welcome')
+@section('content')
     <section id="herro">
         <div class="container h-100">
             <div class="row h-100">
@@ -66,7 +8,7 @@
                     <h1 class="herro-tagline">Laundry Cepat, Bersih, dan Rapi dalam Satu Sentuhan!</h1>
                     <h2 class="sub-herro-tagline">"Layanan Laundry Terpercaya yang Siap Membantu Menghemat Waktu Anda."
                     </h2>
-                    <button class="button-secoundary">Coba Sekarang !</button>
+                    <a href="{{ route('list-service') }}" class="button-secoundary">Coba Sekarang !</a>
                 </div>
                 <div class="col-md-6 my-auto">
                     <img class="img-fluid" src="{{ asset('assets/front_asset/image/herro.png') }}" alt="">
@@ -148,13 +90,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img class="img-fluid" src="{{ asset('assets/front_asset/image/Girl drinking coffee while waiting for the end of the laundry.png') }}"
+                    <img class="img-fluid"
+                        src="{{ asset('assets/front_asset/image/Girl drinking coffee while waiting for the end of the laundry.png') }}"
                         alt="">
                 </div>
                 <div class="col-md-6 my-auto">
                     <h1 class="tagline sub-reason mb-5"><span>Mengapa</span> Memilih Kami ?</h1>
                     <div class="d-flex gap-3 mb-3">
-                        <div><img src="{{ asset('assets/front_asset/image/Group 11.png') }}" alt="" width="50px"></div>
+                        <div><img src="{{ asset('assets/front_asset/image/Group 11.png') }}" alt="" width="50px">
+                        </div>
                         <div>
                             <h6 class=""><b>Pilihan Paket Hemat</b></h6>
                             <p>Hemat lebih banyak dengan berbagai pilihan paket laundry kami. Pilih paket yang paling
@@ -163,7 +107,8 @@
                         </div>
                     </div>
                     <div class="d-flex gap-3 mb-3">
-                        <div><img src="{{ asset('assets/front_asset/image/Group 11.png') }}" alt="" width="50px"></div>
+                        <div><img src="{{ asset('assets/front_asset/image/Group 11.png') }}" alt="" width="50px">
+                        </div>
                         <div>
                             <h6 class=""><b>Pembayaran Online Aman</b></h6>
                             <p>Proses pembayaran yang mudah dan aman dengan berbagai metode pembayaran online. Mulai
@@ -172,7 +117,8 @@
                         </div>
                     </div>
                     <div class="d-flex gap-3 mb-3">
-                        <div><img src="{{ asset('assets/front_asset/image/Group 11.png') }}" alt="" width="50px"></div>
+                        <div><img src="{{ asset('assets/front_asset/image/Group 11.png') }}" alt="" width="50px">
+                        </div>
                         <div>
                             <h6 class=""><b>Garansi Kualitas</b></h6>
                             <p>Kami berkomitmen untuk memberikan hasil terbaik! Garansi kualitas untuk setiap cucian,
@@ -184,11 +130,5 @@
             </div>
         </div>
     </section>
-</body>
-<footer class="text-light text-center">
-    <div class="container items-center">
-        <p>Copyright © 2025, Inc. All Rights Reserved</p>
-    </div>
-</footer>
 
-</html>
+@endsection

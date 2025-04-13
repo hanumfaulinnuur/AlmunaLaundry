@@ -33,6 +33,22 @@ span {
     font-size: 16px;
 }
 
+.custom-name-dropdown {
+    color: var(--br-color) !important;
+    font-weight: 700 !important;
+}
+
+/* styling dropdown header menu */
+.dropdown-item {
+    color: var(--br-color) !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #dcebf4 !important;
+    color: var(--br-color) !important;
+}
+
 .herro-tagline {
     font-weight: 500;
     font-size: 40px;
@@ -59,6 +75,10 @@ span {
     height: 60px;
     font-size: 20px;
     font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 /* khusus page login */
@@ -171,6 +191,18 @@ input {
     font-weight: 400;
     font-size: 25px;
     text-align: justify;
+}
+
+/* page order */
+.btn-order {
+    color: var(--wt-color) !important;
+    background-color: var(--or-color) !important;
+}
+
+.card-img-top {
+    width: 40% !important;
+    margin: 0 auto !important;
+    padding: 30px 0 30px 0;
 }
 
 /* footer */
