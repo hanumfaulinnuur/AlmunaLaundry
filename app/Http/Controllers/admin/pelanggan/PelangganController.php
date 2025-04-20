@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\admin\pelanggan;
 
 use App\Models\User;
+use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class PelangganController extends Controller
 {
-
     public function index()
-{
-    $pelanggan = User::where('role', 'pelanggan')->get();
-    return view('admin.pelanggan.list_pelanggan', compact('pelanggan'));
-}
+    {
+        $pelanggan = User::where('role', 'pelanggan')->get();
+        return view('admin.pelanggan.list_pelanggan', compact('pelanggan'));
+    }
 
     public function create()
     {
@@ -21,36 +21,24 @@ class PelangganController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-    ]);
-
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => bcrypt('password'),
-        'role' => 'pelanggan',
-    ]);
-
-    return redirect()->route('list.pelanggan');
-}
-
-
-    public function show(string $id)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+        ]);
 
-    public function edit(string $id)
-    {
-        //
-    }
+        $Pelanggan = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt('password'),
+            'role' => 'pelanggan',
+        ]);
 
-    public function update(Request $request, string $id)
-    {
-        //
+        Pelanggan::create([
+            'id_user' => $Pelanggan->id
+        ]);
+
+        return redirect()->route('list.pelanggan')->with('success', 'Pelanggan berhasil ditambahkan.');
     }
 
     public function destroy(string $id)

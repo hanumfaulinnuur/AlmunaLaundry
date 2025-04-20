@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -23,21 +24,24 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        // Cek role user
-        if (Auth::user()->role === 'admin') {
-            return redirect()->intended('/admin/beranda');
-        } elseif (Auth::user()->role === 'pelanggan') {
-            return redirect()->intended('/dashboard');
-        }
-
-        // Fallback jika role tidak dikenali
-        return redirect('/');
+{
+    if (!Auth::attempt($request->only('email', 'password'))) {
+        throw ValidationException::withMessages([
+            'email' => 'Email atau password salah.',
+        ]);
     }
+
+    $request->session()->regenerate();
+
+    // Cek role user
+    if (Auth::user()->role === 'admin') {
+        return redirect()->intended('/admin/beranda');
+    } elseif (Auth::user()->role === 'pelanggan') {
+        return redirect()->intended('/dashboard');
+    }
+
+    return redirect('/');
+}
 
     /**
      * Destroy an authenticated session.

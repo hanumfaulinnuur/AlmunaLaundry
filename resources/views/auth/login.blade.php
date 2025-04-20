@@ -29,6 +29,11 @@
                     <div class="form-login">
                         <h1 class="text-center header-font-style">Almuna Laundry</h1>
                         <h3 class="text-center sub-header-font-style">login to your account !</h3>
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             {{-- input email --}}

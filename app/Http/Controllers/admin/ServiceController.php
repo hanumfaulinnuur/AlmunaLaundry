@@ -29,7 +29,7 @@ class ServiceController extends Controller
 
         Service::create($validated);
 
-        return redirect()->route('admin.services.index');
+        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil ditambahkan.');
     }
 
     public function edit(string $id)
@@ -49,7 +49,7 @@ class ServiceController extends Controller
         $service = Service::findOrFail($id);
         $service->update($validated);
 
-        return redirect()->route('admin.services.index');
+        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil diperbarui.');
     }
 
     public function destroy(string $id)
@@ -57,6 +57,6 @@ class ServiceController extends Controller
         $service = Service::findOrFail($id);
         $service->delete();
 
-        return redirect()->route('admin.services.index');
+        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil dihapus.');
     }
 }

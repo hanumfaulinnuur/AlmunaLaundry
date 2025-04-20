@@ -34,13 +34,14 @@
                 <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content text-center p-4">
-                            <div class="modal-body">
-                                <h5 class="mb-4">Apakah kamu akan<br>Melakukan Order Berikut?</h5>
-                                <div class="d-flex justify-content-center gap-3">
-                                    <button type="button" class="btn btn-outline-warning"
+                        <div class="modal-content text-center">
+                            <div class="modal-body p-5">
+                                <h5 class="mb-4">Apakah kamu akan <br> Melakukan Order Berikut?</h5>
+                                <div class="d-flex justify-content-center gap-5">
+                                    <button type="button" class="btn btn-outline-warning btn-modal"
                                         data-bs-dismiss="modal">Batal</button>
-                                    <button type="button" class="btn btn-warning text-white" id="btnLanjut">Lanjut</button>
+                                    <button type="button" class="btn btn-warning btn-modal text-white"
+                                        id="btnLanjut">Lanjut</button>
                                 </div>
                             </div>
                         </div>
