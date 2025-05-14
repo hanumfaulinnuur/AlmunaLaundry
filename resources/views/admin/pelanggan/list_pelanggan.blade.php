@@ -22,7 +22,6 @@
                             <th scope="col">No</th>
                             <th scope="col">Nama Pelanggan</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,11 +30,6 @@
                                 <th scope="row" class="text-center">{{ $key + 1 }}</th>
                                 <td>{{ $pelanggan->name }}</td>
                                 <td>{{ $pelanggan->email }}</td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </button>
-                                </td>
                             </tr>
                         @empty
                             <tr>

@@ -40,9 +40,4 @@ class PelangganController extends Controller
 
         return redirect()->route('list.pelanggan')->with('success', 'Pelanggan berhasil ditambahkan.');
     }
-
-    public function destroy(string $id)
-    {
-        //
-    }
 }
