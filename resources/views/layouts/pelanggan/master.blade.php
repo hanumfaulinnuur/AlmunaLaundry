@@ -17,6 +17,12 @@
     <script src="{{ asset('bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js') }}"></script>
     <link href="{{ asset('assets/front_asset/image/blue washing machine.png') }}" rel="icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- CSS Untuk Stepper-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
     <title>Almuna Laundry | @yield('title')</title>
 </head>

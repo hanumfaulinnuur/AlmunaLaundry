@@ -16,13 +16,46 @@
                         <hr>
                         <h5 class="card-title">Slado Tersisa</h5>
                         <h5>Rp.10.000,00</h5>
+                        <a href="{{ route('isi.saldo') }}" class="btn btn-danger">Top Up Saldo</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="card shadow p-5 bg-body-tertiary rounded mb-5">
-                    <div style="width: fit-content;">
+                    <div style="width: 100%;">
                         <h4 class="section-title-profile">Riwayat Transaksi </h4>
+                        <div class="container mt-4">
+                            <div class="container mt-4">
+                                @if ($riwayat->isEmpty())
+                                    <p class="text-muted">Belum ada riwayat transaksi.</p>
+                                @else
+                                    @foreach ($riwayat as $item)
+                                        <div class="row align-items-center transaction-item">
+                                            <div class="col-auto">
+                                                <div
+                                                    class="icon-circle {{ $item->jenis_transaksi == 'debit' ? 'bg-danger' : 'bg-success' }}">
+                                                    <i
+                                                        class="bi {{ $item->jenis_transaksi == 'debit' ? 'bi-credit-card' : 'bi-wallet2' }}"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="fw-bold">
+                                                    {{ $item->jenis_transaksi == 'debit' ? 'Pembayaran Order' : 'Isi Saldo' }}
+                                                </div>
+                                                <small>{{ \Carbon\Carbon::parse($item->tanggal_transaksi)->translatedFormat('l, d-m-Y H:i') }}</small>
+                                            </div>
+                                            <div
+                                                class="col-auto {{ $item->jenis_transaksi == 'debit' ? 'text-red' : 'text-green' }}">
+                                                {{ $item->jenis_transaksi == 'debit' ? '-' : '+' }}Rp.
+                                                {{ number_format($item->nominal, 0, ',', '.') }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
             </div>

@@ -46,12 +46,14 @@ class ProfileController extends Controller
         $user->fill($request->only('name', 'email'));
         $user->save();
 
-        // Update data pelanggan (kalau relasi ada)
+        // Update data pelanggan
         $pelanggan = $user->pelanggan;
         if ($pelanggan) {
             $pelanggan->update([
                 'no_telepon' => $request->input('no_telepon'),
                 'alamat' => $request->input('alamat'),
+                'latitude' => $request->input('latitude'),
+                'longitude' => $request->input('longitude'),
             ]);
         }
 

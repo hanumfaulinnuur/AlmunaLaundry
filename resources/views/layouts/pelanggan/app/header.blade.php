@@ -33,7 +33,8 @@
                         <li><a class="dropdown-item p-2" href="{{ route('saldo') }}"><i class="bi bi-database-fill"></i>
                                 Saldo
                                 Deposit</a></li>
-                        <li><a class="dropdown-item p-2" href="#"><i class="bi bi-clock-history"></i> Riwayat
+                        <li><a class="dropdown-item p-2" href="{{ route('riwayat.order') }}"><i
+                                    class="bi bi-clock-history"></i> Riwayat
                                 Order</a></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST">

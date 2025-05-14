@@ -23,7 +23,6 @@
                   </li>
               </ul>
           </li>
-          <!-- sub menu service layanan -->
 
           <!-- sub menu pelanggan -->
           <li class="nav-item">
@@ -38,7 +37,6 @@
                   </li>
               </ul>
           </li>
-          <!-- sub menu pelanggan -->
 
           <!-- sub menu order -->
           <li class="nav-item">
@@ -49,17 +47,16 @@
               <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
                       <a href="">
-                          <i class="bi bi-circle"></i><span>List Daftar Guru</span>
+                          <i class="bi bi-circle"></i><span>Rekap Order Selesai</span>
                       </a>
                   </li>
                   <li>
-                      <a href="">
-                          <i class="bi bi-circle"></i><span>Tambah Data Guru</span>
+                      <a href="{{ route('order-list-validasi') }}">
+                          <i class="bi bi-circle"></i><span>Order Masuk</span>
                       </a>
                   </li>
               </ul>
           </li>
-          <!-- sub menu order -->
 
           <!-- sub menu deposit -->
           <li class="nav-item">
@@ -69,6 +66,5 @@
               <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               </ul>
           </li>
-          <!-- sub menu deposit -->
       </ul>
   </aside>

@@ -103,6 +103,50 @@ h6 {
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
 /* Dropdown menus */
+
+.custom-dropdown-toggle {
+    background-color: #fff;
+    color: #002f6c;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.custom-dropdown-toggle span {
+    white-space: nowrap;
+}
+
+.custom-dropdown-toggle i {
+    margin-left: 8px;
+    flex-shrink: 0;
+}
+
+.custom-dropdown-menu {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    border: none;
+}
+
+.custom-dropdown-menu .dropdown-item {
+    color: #002f6c;
+    font-weight: 500;
+    padding: 10px 20px !important;
+}
+
+.custom-dropdown-menu .dropdown-item:hover {
+    background-color: rgb(189, 199, 215);
+    color: #135ad7;
+}
+
+/* end custom dropdown */
 .dropdown-menu {
     border-radius: 4px;
     padding: 10px 0;

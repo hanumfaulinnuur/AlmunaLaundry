@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 class GlobalController extends Controller
@@ -12,7 +13,10 @@ class GlobalController extends Controller
     }
 
     public function lacakStatus()
-    {
-        return view('lacak_status');
-    }
+{
+    $lacakStatus = Transaksi::with(['Pelanggan.user', 'Service'])->get();
+    return view('lacak_status', compact('lacakStatus'));
+}
+
+
 }

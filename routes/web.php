@@ -7,6 +7,7 @@ use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Saldo\SaldoController;
 use App\Http\Controllers\admin\BerandaController;
 use App\Http\Controllers\admin\ServiceController;
+use App\Http\Controllers\Order\RiwayatOrderController;
 use App\Http\Controllers\admin\pelanggan\PelangganController;
 
 Route::get('/', function () {
@@ -32,12 +33,34 @@ Route::get('/lacak-status', [GlobalController::class, 'lacakStatus'])->name('lac
 
 //Order Controller
 Route::get('/list-service', [OrderController::class, 'listLaynaan'])->name('list-service');
+Route::post('/order/store', [OrderController::class, 'store'])
+    ->name('order.store')
+    ->middleware('auth');
+
+// Riwayat Controller
+Route::get('riwayat', [RiwayatOrderController::class, 'Riwayat'])->name('riwayat.order');
+Route::get('/riwayat-order/detail/{id}', [RiwayatOrderController::class, 'detailStepper']);
+Route::get('detail-transaksi-order/{id}', [RiwayatOrderController::class, 'detailTransaksiOrder'])->name('detail.transaksi.order');
+
+//Order Controller Sub Validasi Pesanan
+Route::get('/order-list-validasi', [OrderController::class, 'listOrderValidasi'])->name('order-list-validasi');
+Route::get('/order-validasi/{id}', [OrderController::class, 'validasiOrder'])->name('order-validasi');
+Route::put('/order-update/{id}', [OrderController::class, 'update'])->name('order.update');
+
+//Order Controller Sub Proses Pesanan
+Route::get('/order-list-diproses', [OrderController::class, 'listOrderDiproses'])->name('order-list-diproses');
+
+//Order Controller Konfirmasi Pesanan Selesai Diproses
+Route::put('/order-konfirmasi/{id}', [OrderController::class, 'konfirmasiProsesSelesai'])->name('order.proses.konfirmasi');
+
+//Order Controller Sub Menunggu Pembayaran
+Route::get('/order-list-pembayaran', [OrderController::class, 'listOrderMenungguPembayaran'])->name('order-list-pembayaran');
 
 //Saldo Controller
 Route::middleware('auth')->group(function () {
-    Route::get('/saldo', [SaldoController::class, 'lihatSaldo'])->name('saldo');
+    Route::get('/saldo', [SaldoController::class, 'RiwayatTransaksi'])->name('saldo');
+    Route::get('/isi-saldo', [SaldoController::class, 'isiSaldo'])->name('isi.saldo');
 });
-
 
 // Beranda Admin Controller
 Route::group(['prefix' => 'admin'], function () {
@@ -57,7 +80,5 @@ Route::prefix('pelanggan')->group(function () {
     Route::get('/tambah-pelanggan', [PelangganController::class, 'create'])->name('tambah.pelanggan');
     Route::post('/proses-tambah-pelanggan', [PelangganController::class, 'store'])->name('proses.tambah.pelanggan');
 });
-
-
 
 require __DIR__ . '/auth.php';
