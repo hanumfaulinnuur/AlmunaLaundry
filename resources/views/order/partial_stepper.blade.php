@@ -29,6 +29,8 @@
             <li>
                 <strong>Selesai</strong>
                 <p>{{ \Carbon\Carbon::parse($transaksi->updated_at)->translatedFormat('l, d F Y H:i') }}</p>
+                <a href="{{ route('invoice', ['id' => $transaksi->id]) }}" class="btn btn-primary btn-sm">Lihat
+                    Invoice</a>
             </li>
         @endif
     </ul>

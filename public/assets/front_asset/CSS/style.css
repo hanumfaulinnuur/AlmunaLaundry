@@ -392,6 +392,17 @@ textarea.form-control {
     /* height: 500px !important; */
 }
 
+/* halaman invoice */
+a.text-primary:hover {
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+a.text-danger:hover {
+    color: #dc3545;
+    text-decoration: underline;
+}
+
 /* footer */
 footer {
     background-color: var(--br-color);

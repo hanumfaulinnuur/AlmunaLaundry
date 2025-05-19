@@ -15,8 +15,8 @@
                         <h5 class="card-title">{{ Auth::user()->name }}</h5>
                         <hr>
                         <h5 class="card-title">Slado Tersisa</h5>
-                        <h5>Rp.10.000,00</h5>
-                        <a href="{{ route('isi.saldo') }}" class="btn btn-danger">Top Up Saldo</a>
+                        <h5>Rp.{{ number_format($saldo, 0, ',', '.') }},00</h5> <a href="{{ route('isi.saldo') }}"
+                            class="btn btn-danger">Top Up Saldo</a>
                     </div>
                 </div>
             </div>

@@ -36,6 +36,7 @@
                             <th scope="col">Nama</th>
                             <th scope="col">Jenis Service</th>
                             <th scope="col">Tanggal Order</th>
+                            <th scope="col">Status Pembayaran</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
@@ -48,12 +49,38 @@
                                 <td>{{ $listOrderPembayaran->Service->nama_service ?? '-' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($listOrderPembayaran->tanggal_order)->translatedFormat('l, d F Y') }}
                                 </td>
-                                <td><a class="btn btn-danger disabled">Menunggu Pembayaran</a></td>
-
+                                <td>
+                                    @php
+                                        $status =
+                                            $listOrderPembayaran->Pembayaran->status_pembayaran ?? 'Belum Dibayar';
+                                    @endphp
+                                    <span
+                                        class="badge 
+                                        @if ($status == 'berhasil') bg-success  
+                                        @elseif($status == 'menunggu') bg-warning text-dark  
+                                        @else bg-secondary @endif">
+                                        {{ ucfirst($status) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if (optional($listOrderPembayaran->Pembayaran)->jenis_pembayaran === 'cash' &&
+                                            optional($listOrderPembayaran->Pembayaran)->status_pembayaran === 'pending')
+                                        <form action="{{ route('admin.validasi.cash', $listOrderPembayaran->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button class="btn btn-success btn-sm"
+                                                onclick="return confirm('Validasi pembayaran cash ini?')">
+                                                Validasi Pembayaran
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span class="text-muted">Tidak tersedia</span>
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted">Data Kosong</td>
+                                <td colspan="7" class="text-center text-muted">Data Kosong</td>
                             </tr>
                         @endforelse
                     </tbody>

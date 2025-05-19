@@ -7,6 +7,8 @@ use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Saldo\SaldoController;
 use App\Http\Controllers\admin\BerandaController;
 use App\Http\Controllers\admin\ServiceController;
+use App\Http\Controllers\admin\RekapOrderController;
+use App\Http\Controllers\Order\PembayaranController;
 use App\Http\Controllers\Order\RiwayatOrderController;
 use App\Http\Controllers\admin\pelanggan\PelangganController;
 
@@ -37,10 +39,25 @@ Route::post('/order/store', [OrderController::class, 'store'])
     ->name('order.store')
     ->middleware('auth');
 
-// Riwayat Controller
+// Route untuk menampilkan riwayat
 Route::get('riwayat', [RiwayatOrderController::class, 'Riwayat'])->name('riwayat.order');
+
+// Route detail transaksi
 Route::get('/riwayat-order/detail/{id}', [RiwayatOrderController::class, 'detailStepper']);
-Route::get('detail-transaksi-order/{id}', [RiwayatOrderController::class, 'detailTransaksiOrder'])->name('detail.transaksi.order');
+Route::get('detail-transaksi-order/{id}', [PembayaranController::class, 'detailTransaksiOrder'])->name('detail.transaksi.order');
+
+//Route untuk menampilkan halaman detail + token pembayaran
+Route::get('/bayar-transaksi/{id}', [PembayaranController::class, 'snapTransaksi'])->name('bayar.transaksi');
+Route::post('/order/pembayaran-saldo/{id}', [PembayaranController::class, 'bayarDenganSaldo'])->name('pembayaran.saldo');
+
+// Untuk pelanggan
+Route::post('/pembayaran/cash/{id}', [PembayaranController::class, 'bayarDenganCash'])->name('pembayaran.cash');
+
+// Untuk admin validasi
+Route::post('/admin/validasi-cash/{id}', [PembayaranController::class, 'validasiCash'])->name('admin.validasi.cash');
+
+
+Route::get('/invoice/{id}', [PembayaranController::class, 'invoice'])->name('invoice');
 
 //Order Controller Sub Validasi Pesanan
 Route::get('/order-list-validasi', [OrderController::class, 'listOrderValidasi'])->name('order-list-validasi');
@@ -56,10 +73,15 @@ Route::put('/order-konfirmasi/{id}', [OrderController::class, 'konfirmasiProsesS
 //Order Controller Sub Menunggu Pembayaran
 Route::get('/order-list-pembayaran', [OrderController::class, 'listOrderMenungguPembayaran'])->name('order-list-pembayaran');
 
+//Rekap Order Selesai
+Route::get('/rekap-order', [RekapOrderController::class, 'orderSelesai'])->name('rekap-order-selesai');
+
 //Saldo Controller
 Route::middleware('auth')->group(function () {
     Route::get('/saldo', [SaldoController::class, 'RiwayatTransaksi'])->name('saldo');
     Route::get('/isi-saldo', [SaldoController::class, 'isiSaldo'])->name('isi.saldo');
+    Route::post('/midtrans/charge', [SaldoController::class, 'charge'])->name('midtrans.charge')->middleware('auth');
+    Route::post('/midtrans/update-saldo', [SaldoController::class, 'updateSaldo'])->name('midtrans.updateSaldo')->middleware('auth');
 });
 
 // Beranda Admin Controller

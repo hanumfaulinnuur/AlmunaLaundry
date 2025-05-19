@@ -15,7 +15,7 @@
                         <h5 class="card-title">{{ Auth::user()->name }}</h5>
                         <hr>
                         <h5 class="card-title">Saldo Tersisa</h5>
-                        <h5>Rp.10.000,00</h5>
+                        <h5>Rp. {{ number_format($saldo, 0, ',', '.') }},00</h5>
                     </div>
                 </div>
             </div>
@@ -25,48 +25,52 @@
                 <div class="card shadow p-5 bg-body-tertiary rounded mb-5">
                     <h4 class="section-title-profile">Isi Saldo</h4>
                     <div class="row my-4 g-3">
-
-                        {{-- Kartu Saldo (hardcoded) --}}
                         <div class="col-md-4">
                             <div class="border rounded text-center p-3 shadow-sm">
-                                <h5><b>Isi Ulang Saldo</b></h5>
-                                <h6 class="text-danger">Rp. 10.000</h6>
-                                <button class="btn btn-warning text-white mt-2 w-75 rounded">Beli</button>
+                                <h4 class="text-emphasis"><b>10 ribu</b></h4>
+                                <h6 class="text-danger">Rp. 13.000</h6>
+                                <button class="btn btn-warning text-white mt-2 w-75 rounded btn-buy" data-amount="13000"
+                                    data-topup="10000">Beli</button>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="border rounded text-center p-3 shadow-sm">
-                                <h5><b>Isi Ulang Saldo</b></h5>
-                                <h6 class="text-danger">Rp. 30.000</h6>
-                                <button class="btn btn-warning text-white mt-2 w-75 rounded">Beli</button>
+                                <h4 class="text-emphasis"><b>30 ribu</b></h4>
+                                <h6 class="text-danger">Rp. 33.000</h6>
+                                <button class="btn btn-warning text-white mt-2 w-75 rounded btn-buy" data-amount="33000"
+                                    data-topup="30000">Beli</button>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="border rounded text-center p-3 shadow-sm">
-                                <h5><b>Isi Ulang Saldo</b></h5>
-                                <h6 class="text-danger">Rp. 50.000</h6>
-                                <button class="btn btn-warning text-white mt-2 w-75 rounded">Beli</button>
+                                <h4 class="text-emphasis"><b>50 ribu</b></h4>
+                                <h6 class="text-danger">Rp. 53.000</h6>
+                                <button class="btn btn-warning text-white mt-2 w-75 rounded btn-buy" data-amount="53000"
+                                    data-topup="50000">Beli</button>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="border rounded text-center p-3 shadow-sm">
-                                <h5><b>Isi Ulang Saldo</b></h5>
-                                <h6 class="text-danger">Rp. 100.000</h6>
-                                <button class="btn btn-warning text-white mt-2 w-75 rounded">Beli</button>
+                                <h4 class="text-emphasis"><b>100 ribu</b></h4>
+                                <h6 class="text-danger">Rp. 103.000</h6>
+                                <button class="btn btn-warning text-white mt-2 w-75 rounded btn-buy" data-amount="103000"
+                                    data-topup="100000">Beli</button>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="border rounded text-center p-3 shadow-sm">
-                                <h5><b>Isi Ulang Saldo</b></h5>
-                                <h6 class="text-danger">Rp. 150.000</h6>
-                                <button class="btn btn-warning text-white mt-2 w-75 rounded">Beli</button>
+                                <h4 class="text-emphasis"><b>150 ribu</b></h4>
+                                <h6 class="text-danger">Rp. 153.000</h6>
+                                <button class="btn btn-warning text-white mt-2 w-75 rounded btn-buy" data-amount="153000"
+                                    data-topup="150000">Beli</button>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="border rounded text-center p-3 shadow-sm">
-                                <h5><b>Isi Ulang Saldo</b></h5>
-                                <h6 class="text-danger">Rp. 200.000</h6>
-                                <button class="btn btn-warning text-white mt-2 w-75 rounded">Beli</button>
+                                <h4 class="text-emphasis"><b>200 ribu</b></h4>
+                                <h6 class="text-danger">Rp. 203.000</h6>
+                                <button class="btn btn-warning text-white mt-2 w-75 rounded btn-buy" data-amount="203000"
+                                    data-topup="200000">Beli</button>
                             </div>
                         </div>
 
@@ -75,4 +79,80 @@
             </div>
         </div>
     </div>
+
+    {{-- Pasang Midtrans Snap JS --}}
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+
+    <script>
+        document.querySelectorAll('.btn-buy').forEach(button => {
+            button.addEventListener('click', function() {
+                let amount = this.getAttribute('data-amount'); // nominal bayar ke Midtrans
+                let topup = this.getAttribute('data-topup'); // nominal saldo yang ditambahkan
+
+                // Minta snap token dengan nominal bayar
+                fetch("{{ route('midtrans.charge') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            amount: amount
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.snap_token) {
+                            snap.pay(data.snap_token, {
+                                onSuccess: function(result) {
+                                    alert("Pembayaran berhasil!");
+
+                                    // Update saldo dengan nominal bulat topup
+                                    fetch("{{ route('midtrans.updateSaldo') }}", {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                            },
+                                            body: JSON.stringify({
+                                                amount: topup
+                                            })
+                                        })
+                                        .then(res => res.json())
+                                        .then(resData => {
+                                            if (resData.success) {
+                                                alert('Saldo berhasil diperbarui.');
+                                                location.reload();
+                                            } else {
+                                                alert('Gagal memperbarui saldo: ' + (
+                                                    resData.error ||
+                                                    'Unknown error'));
+                                            }
+                                        })
+                                        .catch(err => alert('Error saat update saldo: ' +
+                                            err.message));
+                                },
+                                onPending: function(result) {
+                                    alert("Menunggu pembayaran...");
+                                },
+                                onError: function(result) {
+                                    alert("Pembayaran gagal!");
+                                },
+                                onClose: function() {
+                                    alert(
+                                        'Anda menutup popup pembayaran tanpa menyelesaikan pembayaran'
+                                    );
+                                }
+                            });
+                        } else {
+                            alert('Gagal mendapatkan snap token');
+                        }
+                    })
+                    .catch(err => {
+                        alert('Terjadi error: ' + err.message);
+                    });
+            });
+        });
+    </script>
+
 @endsection
