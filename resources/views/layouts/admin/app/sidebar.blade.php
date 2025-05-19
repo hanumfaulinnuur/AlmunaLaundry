@@ -46,7 +46,7 @@
               </a>
               <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li>
-                      <a href="">
+                      <a href="{{ route('rekap-order-selesai') }}">
                           <i class="bi bi-circle"></i><span>Rekap Order Selesai</span>
                       </a>
                   </li>
@@ -58,13 +58,13 @@
               </ul>
           </li>
 
-          <!-- sub menu deposit -->
+          {{-- <!-- sub menu deposit -->
           <li class="nav-item">
               <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-wallet2"></i><span>Deposit</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
               </ul>
-          </li>
+          </li> --}}
       </ul>
   </aside>

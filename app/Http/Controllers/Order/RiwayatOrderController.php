@@ -21,11 +21,4 @@ class RiwayatOrderController extends Controller
         $transaksi = Transaksi::with('Service')->findOrFail($id);
         return view('order.partial_stepper', compact('transaksi'));
     }
-
-    public function detailTransaksiOrder($id) {
-    $transaksi = Transaksi::with('Service')->findOrFail($id);
-    return view('order.detail_transaksi', compact('transaksi'));
-}
-
-
 }
