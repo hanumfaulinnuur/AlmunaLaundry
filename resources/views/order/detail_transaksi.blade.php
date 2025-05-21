@@ -4,24 +4,26 @@
     <div class="container my-5 px-5" style="height:70vh">
         <div class="card shadow p-5" style="border-radius: 20px;">
             <h3 class="my-5 section-title-detail">Detail Transaksi</h3>
-            <table class="table table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>Jenis Service</th>
-                        <th>Harga Satuan</th>
-                        <th>Berat</th>
-                        <th>Total Harga</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $transaksi->Service->nama_service }}</td>
-                        <td>Rp. {{ number_format($transaksi->Service->harga, 0, ',', '.') }}</td>
-                        <td>{{ $transaksi->total_berat }} kg</td>
-                        <td>Rp. {{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Jenis Service</th>
+                            <th>Harga Satuan</th>
+                            <th>Berat</th>
+                            <th>Total Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $transaksi->Service->nama_service }}</td>
+                            <td>Rp. {{ number_format($transaksi->Service->harga, 0, ',', '.') }}</td>
+                            <td>{{ $transaksi->total_berat }} kg</td>
+                            <td>Rp. {{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <small class="text-danger mt-3">* Biaya admin sebesar Rp 3.000 akan dikenakan untuk pembayaran via
                 Midtrans.</small>
 

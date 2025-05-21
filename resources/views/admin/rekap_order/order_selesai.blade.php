@@ -6,7 +6,7 @@
             <div class="card-body">
                 <h5 class="card-title mb-0">List Rekap Data Order</h5>
                 <div class="d-flex gap-3">
-                    <button class="btn btn-success">Ekspor Excel</button>
+                    <a href="{{ route('ekspor.excel') }}" class="btn btn-success">Ekspor Excel</a>
                     <button class="btn btn-primary">Lihat Detail</button>
                 </div>
                 <hr>
