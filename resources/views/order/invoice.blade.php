@@ -22,12 +22,12 @@
             </div>
             <div class="d-flex justify-content-between">
                 <span class="text-muted">Waktu</span>
-                <span>{{ \Carbon\Carbon::parse($pembayaran->tanggal_pembayaran ?? $transaksi->updated_at)->format('H:i') }}
+                <span>{{ \Carbon\Carbon::parse($pembayaran->tanggal_pembayaran)->format('H:i') }}
                     WIB</span>
             </div>
             <div class="d-flex justify-content-between">
                 <span class="text-muted">Tanggal</span>
-                <span>{{ \Carbon\Carbon::parse($pembayaran->tanggal_pembayaran ?? $transaksi->updated_at)->translatedFormat('d F Y') }}</span>
+                <span>{{ \Carbon\Carbon::parse($pembayaran->tanggal_pembayaran)->translatedFormat('d F Y') }}</span>
             </div>
             <div class="d-flex justify-content-between mb-3">
                 <span class="text-muted">ID Transaksi</span>
@@ -37,8 +37,8 @@
             <h6 class="fw-semibold mt-3 mb-2">Rincian Pesan</h6>
             <div class="d-flex justify-content-between">
                 <span>{{ $transaksi->Service->nama_service ?? '-' }}</span>
-                <span><small class="text-end">{{ rtrim(rtrim(number_format($transaksi->total_berat, 1), '0'), '.') }} kg
-                    </small> <br> Rp.
+                <span>{{ rtrim(rtrim(number_format($transaksi->total_berat, 1), '0'), '.') }} kg
+                    <br> Rp.
                     {{ number_format($transaksi->service->harga, 0, ',', '.') }}</span>
             </div>
 
@@ -49,12 +49,14 @@
             </div>
             <div class="d-flex justify-content-between mt-2">
                 <span class="text-muted">Biaya Admin</span>
-                <span>Rp. 0</span>
+                <span>Rp. {{ number_format($pembayaran->biaya_admin ?? 0, 0, ',', '.') }}</span>
             </div>
             <hr>
             <div class="d-flex justify-content-between fw-bold">
                 <span>Total Biaya</span>
-                <span class="text-dark">Rp. {{ number_format($transaksi->total_harga, 0, ',', '.') }}</span>
+                <span class="text-dark">
+                    Rp. {{ number_format($transaksi->total_harga + ($pembayaran->biaya_admin ?? 0), 0, ',', '.') }}
+                </span>
             </div>
 
             <div class="d-flex justify-content-between mt-4">

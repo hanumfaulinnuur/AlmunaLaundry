@@ -42,7 +42,7 @@
                                                 <div class="fw-bold">
                                                     {{ $item->jenis_transaksi == 'debit' ? 'Pembayaran Order' : 'Isi Saldo' }}
                                                 </div>
-                                                <small>{{ \Carbon\Carbon::parse($item->tanggal_transaksi)->translatedFormat('l, d-m-Y H:i') }}</small>
+                                                <small>{{ \Carbon\Carbon::parse($item->tanggal_transaksi)->translatedFormat('l, d F Y H:i') }}</small>
                                             </div>
                                             <div
                                                 class="col-auto {{ $item->jenis_transaksi == 'debit' ? 'text-red' : 'text-green' }}">

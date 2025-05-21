@@ -106,6 +106,7 @@ class OrderController extends Controller
     {
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->status_transaksi = 'menunggu pembayaran';
+        $transaksi->tanggal_selesai = now();
         $transaksi->save();
 
         return redirect()->route('order-list-diproses');

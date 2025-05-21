@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('id_pelanggan');
             $table->unsignedInteger('nominal');
-            $table->date('tanggal_transaksi');
+            $table->datetime('tanggal_transaksi');
             $table->enum('jenis_transaksi', ['debit', 'kredit']);
             $table->timestamps();
 
