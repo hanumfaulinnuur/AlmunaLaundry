@@ -7,6 +7,7 @@ use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Saldo\SaldoController;
 use App\Http\Controllers\admin\BerandaController;
 use App\Http\Controllers\admin\ServiceController;
+use App\Http\Controllers\Ekspor\EksporController;
 use App\Http\Controllers\admin\RekapOrderController;
 use App\Http\Controllers\Order\PembayaranController;
 use App\Http\Controllers\Order\RiwayatOrderController;
@@ -72,6 +73,11 @@ Route::put('/order-konfirmasi/{id}', [OrderController::class, 'konfirmasiProsesS
 
 //Order Controller Sub Menunggu Pembayaran
 Route::get('/order-list-pembayaran', [OrderController::class, 'listOrderMenungguPembayaran'])->name('order-list-pembayaran');
+
+// Ekspor Data
+Route::get('/invoice/{id}/download', [EksporController::class, 'eksporInvoicePDF'])->name('invoice.download');
+Route::get('/export-excel', [EksporController::class, 'exportRekapOrderExcel'])->name('ekspor.excel');
+
 
 //Rekap Order Selesai
 Route::get('/rekap-order', [RekapOrderController::class, 'orderSelesai'])->name('rekap-order-selesai');

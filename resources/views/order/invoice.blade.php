@@ -62,7 +62,8 @@
             <div class="d-flex justify-content-between mt-4">
                 <a href="{{ route('riwayat.order') }}" class="text-primary text-decoration-none fw-semibold">Kembali Ke
                     Riwayat</a>
-                <a href="#" class="text-danger text-decoration-none fw-semibold">Download PDF</a>
+                <a href="{{ route('invoice.download', $transaksi->id) }}"
+                    class="text-danger text-decoration-none fw-semibold">Download PDF</a>
             </div>
         </div>
     </div>
