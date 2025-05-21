@@ -51,6 +51,23 @@
             </div>
         </div>
 
+        <!-- Modal Notifikasi Order Sedang Diproses -->
+        <div class="modal fade" id="orderProcessedModal" tabindex="-1" aria-labelledby="orderProcessedModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content text-center">
+                    <div class="modal-header">
+                        <!-- Tombol close di sini -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5">
+                        <img src="{{ asset('assets/front_asset/image/admin.png') }}" alt="Order Process" width="20%">
+                        <h5 class="mt-4">Order Kamu Sedang Diproses, Silahkan Konfirmasi Admin</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Form Hidden -->
         <form id="formOrder" action="{{ route('order.store') }}" method="POST" style="display: none;">
             @csrf
@@ -73,6 +90,10 @@
             if (selectedServiceId) {
                 document.getElementById('idServiceInput').value = selectedServiceId;
                 document.getElementById('formOrder').submit();
+
+                // Tampilkan modal order sedang diproses setelah order berhasil
+                $('#konfirmasiModal').modal('hide'); // Tutup modal konfirmasi
+                $('#orderProcessedModal').modal('show'); // Tampilkan modal order sedang diproses
             }
         });
     </script>

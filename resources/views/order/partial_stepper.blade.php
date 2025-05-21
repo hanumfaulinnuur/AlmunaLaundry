@@ -1,9 +1,16 @@
 <div>
     <ul class="timeline">
         <li>
-            <strong>Order Divalidasi Admin</strong>
-            <p>{{ \Carbon\Carbon::parse($transaksi->updated_at)->translatedFormat('l, d F Y H:i') }}</p>
+            <strong>Order Pesanan Dibuat</strong>
+            <p>{{ \Carbon\Carbon::parse($transaksi->created_at)->translatedFormat('l, d F Y H:i') }}</p>
         </li>
+
+        @if ($transaksi->status_transaksi == 'proses validasi' || $transaksi->status_transaksi == 'sedang di proses')
+            <li>
+                <strong>Order Divalidasi Admin</strong>
+                <p>{{ \Carbon\Carbon::parse($transaksi->updated_at)->translatedFormat('l, d F Y H:i') }}</p>
+            </li>
+        @endif
 
         @if (in_array($transaksi->status_transaksi, ['sedang di proses', 'menunggu pembayaran', 'selesai']))
             <li>

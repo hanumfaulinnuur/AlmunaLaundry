@@ -80,8 +80,27 @@
         </div>
     </div>
 
+    <!-- Modal untuk Pembayaran Sukses -->
+    <div class="modal fade" tabindex="-1" id="paymentSuccessModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="{{ asset('assets/front_asset/image/done.png') }}" alt="Icon Sukses" width="10%"
+                        class="mb-4">
+                    <h5 class="mb-4"><b>Pembelian Berhasil <br>
+                            Saldo berhasil Ditambahkan</b></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     {{-- Pasang Midtrans Snap JS --}}
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+
 
     <script>
         document.querySelectorAll('.btn-buy').forEach(button => {
@@ -105,9 +124,10 @@
                         if (data.snap_token) {
                             snap.pay(data.snap_token, {
                                 onSuccess: function(result) {
-                                    alert("Pembayaran berhasil!");
+                                    // Menampilkan modal sukses
+                                    $('#paymentSuccessModal').modal('show');
 
-                                    // Update saldo dengan nominal bulat topup
+                                    // Update saldo dengan nominal topup
                                     fetch("{{ route('midtrans.updateSaldo') }}", {
                                             method: 'POST',
                                             headers: {
@@ -121,15 +141,17 @@
                                         .then(res => res.json())
                                         .then(resData => {
                                             if (resData.success) {
-                                                alert('Saldo berhasil diperbarui.');
-                                                location.reload();
+                                                console.log(
+                                                    'Saldo berhasil diperbarui.');
                                             } else {
                                                 alert('Gagal memperbarui saldo: ' + (
                                                     resData.error ||
-                                                    'Unknown error'));
+                                                    'Kesalahan tidak diketahui'
+                                                ));
                                             }
                                         })
-                                        .catch(err => alert('Error saat update saldo: ' +
+                                        .catch(err => alert(
+                                            'Terjadi kesalahan saat memperbarui saldo: ' +
                                             err.message));
                                 },
                                 onPending: function(result) {
@@ -149,10 +171,11 @@
                         }
                     })
                     .catch(err => {
-                        alert('Terjadi error: ' + err.message);
+                        alert('Terjadi kesalahan: ' + err.message);
                     });
             });
         });
     </script>
+
 
 @endsection

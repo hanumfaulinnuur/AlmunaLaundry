@@ -20,7 +20,7 @@
     <section id="service">
         <div class="container h-100">
             <div class="text-center mt-5">
-                <h1 class="tagline"><span>Service </span>Terbaik Untuk Mu</h1>
+                <h1 class="tagline"><span class="batas-tagline">Service </span>Terbaik Untuk Mu</h1>
                 <p class="sub-tagline-service px-5 pt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
                     nec
                     urna
