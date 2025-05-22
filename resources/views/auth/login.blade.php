@@ -38,15 +38,16 @@
                             @csrf
                             {{-- input email --}}
                             <div class="mb-3">
-                                <label for="email" :value="__('Email')" class="form-label">Email</label>
+                                <label for="email" :value="__('Email')"
+                                    class="form-label login-label">Email</label>
                                 <input type="email" id="email" name="email" :value="old('email')"
-                                    class="form-control">
+                                    class="form-control login-input">
 
                             </div>
                             {{-- input password --}}
                             <div class="mb-3 position-relative">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" id="password" name="password" class="form-control">
+                                <label for="password" class="form-label login-label">Password</label>
+                                <input type="password" id="password" name="password" class="form-control login-input">
                                 <i class="bi bi-eye-slash toggle-password"
                                     style="position: absolute; top: 55px; right: 30px; cursor: pointer;"></i>
                             </div>

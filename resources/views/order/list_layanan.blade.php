@@ -8,7 +8,7 @@
                     width="300px">
             </div>
             <div class="col-md-7 my-auto">
-                <h1 class="tagline"><span>Tingkatkan</span> Pengalaman Anda Bersama Kami!</h1>
+                <h1 class="tagline"><span class="batas-tagline">Tingkatkan</span> Pengalaman Anda Bersama Kami!</h1>
                 <h2 class="sub-herro-tagline mt-4">Jelajahi layanan kami dan temukan pilihan yang paling cocok untuk bisnis
                     atau kebutuhan Anda</h2>
             </div>
