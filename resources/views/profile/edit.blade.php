@@ -18,7 +18,7 @@
             </div>
             <div class="col-md-8">
                 <div class="card shadow p-5 bg-body-tertiary rounded mb-5">
-                    <div style="width: fit-content;">
+                    <div style="width: 100%;">
                         <h4 class="section-title-profile">Detail Profil </h4>
                         <table class="table table-custom identitas field">
                             <tbody>
@@ -42,7 +42,6 @@
                                     <td>:</td>
                                     <td>{{ $pelanggan->alamat ?? '-' }}</td>
                                 </tr>
-
                             </tbody>
                         </table>
 
@@ -51,7 +50,7 @@
 
                     </div>
                 </div>
-                <div class="card shadow p-5 bg-body-tertiary rounded mb-5 ">
+                <div class="card shadow p-5 bg-body-tertiary rounded mb-5">
                     <h4 class="section-title-profile mb-4">Ubah Kata Sandi </h4>
                     @include('profile.partials.update-password-form')
                 </div>

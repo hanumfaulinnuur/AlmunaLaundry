@@ -84,12 +84,12 @@ body {
 
 /* khusus page login */
 .page-login {
-    background-image: url("../image/bg-login.png") !important ;
+    background-image: url("../image/bg-login.png") !important;
     height: auto !important;
 }
 
 .button-login {
-    width: 470px;
+    width: 100%;
     height: 55px;
     background-color: var(--br-color);
     color: var(--wt-color);
@@ -110,7 +110,7 @@ body {
 
 .login-input {
     height: 60px;
-    width: 470px !important;
+    width: 100% !important;
 }
 
 /* end */
@@ -391,10 +391,6 @@ body {
     font-weight: 600;
 }
 
-.detail-card {
-    /* height: 500px !important; */
-}
-
 /* halaman invoice */
 a.text-primary:hover {
     color: #0d6efd;
@@ -413,4 +409,79 @@ footer {
     padding: 10px 0;
     font-weight: 400;
     font-size: 15px;
+}
+
+/* RESPONSIVE PAGE */
+@media (max-width: 768px) {
+    .col-md-3,
+    .col-md-8 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .transaction-item {
+        border-bottom: 1px solid #e0e0e0;
+        padding: 15px 0;
+
+        /* padding: 1rem;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px; */
+    }
+
+    .icon-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .col-auto {
+        text-align: right;
+    }
+
+    .fw-bold {
+        font-size: 14px;
+        /* Ukuran font lebih kecil */
+    }
+
+    .section-title-profile {
+        font-size: 16px;
+        /* Ukuran font lebih kecil */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    small {
+        font-size: 12px;
+        /* Ukuran font lebih kecil untuk waktu */
+    }
+
+    .btn {
+        width: 100%;
+        /* Membuat tombol menjadi penuh pada layar kecil */
+        padding: 10px;
+    }
+
+    .page-login {
+        background-size: cover;
+    }
+    .container {
+        padding: 15px;
+    }
+    .row {
+        flex-direction: column;
+    }
+    .col-md-6 {
+        width: 100%;
+    }
+    .form-login {
+        width: 100%;
+    }
+    .button-login {
+        width: 100%;
+    }
 }
