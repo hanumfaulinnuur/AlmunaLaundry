@@ -104,11 +104,11 @@ body {
     color: white;
 }
 
-label {
+.login-label {
     font-size: 20px;
 }
 
-input {
+.login-input {
     height: 60px;
     width: 470px !important;
 }
@@ -229,7 +229,7 @@ input {
 }
 
 .btn-warning:hover {
-    background-color: #e58440 !important; /* versi lebih gelap */
+    background-color: #e58440 !important;
     border-color: transparent !important;
 }
 
@@ -259,7 +259,7 @@ input {
 }
 
 .field {
-    font-size: 20px;
+    font-size: 18px !important;
 }
 
 .table-custom {
@@ -276,12 +276,15 @@ input {
     color: #000;
 }
 
-input .input-profile {
-    height: 100px !important;
+.form-input-profile {
+    width: 100% !important;
 }
 
-textarea.form-control {
+.map {
+    height: 500px;
     width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 /* riwayat order */

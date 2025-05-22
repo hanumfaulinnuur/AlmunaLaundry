@@ -7,7 +7,7 @@
                 <img class="img-fluid" src="{{ asset('assets/front_asset/image/loop.png') }}" alt="" width="300px">
             </div>
             <div class="col-md-6 my-auto">
-                <h1 class="tagline"><span>Pantau Setiap</span> Langkah Proses Cucian Anda Di sini !</h1>
+                <h1 class="tagline"><span class="batas-tagline">Pantau Setiap</span> Langkah Proses Cucian Anda Di sini !</h1>
             </div>
         </div>
 

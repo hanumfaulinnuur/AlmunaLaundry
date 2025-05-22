@@ -13,10 +13,8 @@ class GlobalController extends Controller
     }
 
     public function lacakStatus()
-{
-    $lacakStatus = Transaksi::with(['Pelanggan.user', 'Service'])->get();
-    return view('lacak_status', compact('lacakStatus'));
-}
-
-
+    {
+        $lacakStatus = Transaksi::with(['Pelanggan.user', 'Service'])->get();
+        return view('lacak_status', compact('lacakStatus'));
+    }
 }

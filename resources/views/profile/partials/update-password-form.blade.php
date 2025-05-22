@@ -5,7 +5,7 @@
     <!-- Kata Sandi Sekarang -->
     <div class="row mb-3 align-items-center">
         <div class="col-md-4">
-            <label for="update_password_current_password" class="form-label fw-semibold">Kata Sandi
+            <label for="update_password_current_password" class="form-label fw-semibold field">Kata Sandi
                 Sekarang</label>
         </div>
         <div class="col-md-8">
@@ -18,7 +18,7 @@
     <!-- Kata Sandi Baru -->
     <div class="row mb-3 align-items-center">
         <div class="col-md-4">
-            <label for="update_password_password" class="form-label fw-semibold">Kata Sandi Baru</label>
+            <label for="update_password_password" class="form-label fw-semibold field">Kata Sandi Baru</label>
         </div>
         <div class="col-md-8">
             <input id="update_password_password" name="password" type="password" class="form-control"
@@ -30,7 +30,7 @@
     <!-- Konfirmasi Kata Sandi -->
     <div class="row mb-4 align-items-center">
         <div class="col-md-4">
-            <label for="update_password_password_confirmation" class="form-label fw-semibold">Konfirmasi Kata
+            <label for="update_password_password_confirmation" class="form-label fw-semibold field">Konfirmasi Kata
                 Sandi</label>
         </div>
         <div class="col-md-8">
