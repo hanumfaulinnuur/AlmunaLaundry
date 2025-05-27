@@ -12,7 +12,7 @@ class RekapOrderController extends Controller
     {
         $listOrderSelesai = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'selesai')
-            ->get();
+            ->paginate(10);
 
         return view('admin.rekap_order.order_selesai', compact('listOrderSelesai'));
     }

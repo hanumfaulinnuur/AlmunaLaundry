@@ -28,37 +28,42 @@
                     </div>
                 </div>
                 <hr>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr class="text-center">
-                            <th scope="col">No</th>
-                            <th scope="col">No Invoice</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Jenis Service</th>
-                            <th scope="col">Tanggal Order</th>
-                            <th scope="col">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        @forelse ($listOrderValidasi as $index => $order)
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
                             <tr class="text-center">
-                                <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $order->no_invoice }}</td>
-                                <td>{{ $order->Pelanggan->user->name ?? '-' }}</td>
-                                <td>{{ $order->Service->nama_service ?? '-' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($order->tanggal_order)->translatedFormat('l, d F Y') }}</td>
-                                <td>
-                                    <a href="{{ route('order-validasi', $order->id) }}" class="btn btn-success">Validasi</a>
-                                </td>
+                                <th scope="col">No</th>
+                                <th scope="col">No Invoice</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Jenis Service</th>
+                                <th scope="col">Tanggal Order</th>
+                                <th scope="col">Aksi</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center text-muted">Data Kosong</td>
-                            </tr>
-                        @endforelse
-
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody id="tableBody">
+                            @forelse ($listOrderValidasi as $key => $item)
+                                <tr class="text-center">
+                                    <th scope="row">{{ $listOrderValidasi->firstItem() + $key }}</th>
+                                    <td>{{ $item->no_invoice }}</td>
+                                    <td>{{ $item->Pelanggan->user->name ?? '-' }}</td>
+                                    <td>{{ $item->Service->nama_service ?? '-' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_order)->translatedFormat('l, d F Y') }}</td>
+                                    <td>
+                                        <a href="{{ route('order-validasi', $item->id) }}"
+                                            class="btn btn-success">Validasi</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">Data Kosong</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end my-4">
+                    {{ $listOrderValidasi->links() }}
+                </div>
             </div>
         </div>
     </main>
