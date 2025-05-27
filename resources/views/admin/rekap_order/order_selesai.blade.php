@@ -10,39 +10,44 @@
                     <button class="btn btn-primary">Lihat Detail</button>
                 </div>
                 <hr>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr class="text-center">
-                            <th scope="col">No Invoice</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Jenis Service</th>
-                            <th scope="col">Tanggal Order</th>
-                            <th scope="col">Tanggal Selesai</th>
-                            <th scope="col">Berat</th>
-                            <th scope="col">Harga</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        @forelse ($listOrderSelesai as $index => $listOrderSelesai)
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
                             <tr class="text-center">
-                                <td>{{ $listOrderSelesai->no_invoice }}</td>
-                                <td>{{ $listOrderSelesai->Pelanggan->user->name ?? '-' }}</td>
-                                <td>{{ $listOrderSelesai->Service->nama_service ?? '-' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($listOrderSelesai->tanggal_order)->translatedFormat('l, d F Y') }}
-                                </td>
-                                <td>{{ \Carbon\Carbon::parse($listOrderSelesai->tanggal_order)->translatedFormat('l, d F Y') }}
-                                </td>
-                                <td>{{ rtrim(rtrim(number_format($listOrderSelesai->total_berat, 2, '.', ''), '0'), '.') }}
-                                    Kg</td>
-                                <td>RP. {{ $listOrderSelesai->total_harga }}</td>
+                                <th scope="col">No Invoice</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Jenis Service</th>
+                                <th scope="col">Tanggal Order</th>
+                                <th scope="col">Tanggal Selesai</th>
+                                <th scope="col">Berat</th>
+                                <th scope="col">Harga</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8" class="text-center text-muted">Data kosong</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody id="tableBody">
+                            @forelse ($listOrderSelesai as $key => $item)
+                                <tr class="text-center">
+                                    <td>{{ $item->no_invoice }}</td>
+                                    <td>{{ $item->Pelanggan->user->name ?? '-' }}</td>
+                                    <td>{{ $item->Service->nama_service ?? '-' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_order)->translatedFormat('l, d F Y') }}
+                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_order)->translatedFormat('l, d F Y') }}
+                                    </td>
+                                    <td>{{ rtrim(rtrim(number_format($item->total_berat, 2, '.', ''), '0'), '.') }}
+                                        Kg</td>
+                                    <td>RP. {{ $item->total_harga }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">Data kosong</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end my-4">
+                    {{ $listOrderSelesai->links() }}
+                </div>
             </div>
         </div>
     </main>

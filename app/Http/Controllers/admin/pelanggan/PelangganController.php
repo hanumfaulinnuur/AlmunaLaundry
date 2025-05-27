@@ -11,7 +11,7 @@ class PelangganController extends Controller
 {
     public function index()
     {
-        $pelanggan = User::where('role', 'pelanggan')->get();
+        $pelanggan = User::with('pelanggan')->where('role', 'pelanggan')->paginate(10);
         return view('admin.pelanggan.list_pelanggan', compact('pelanggan'));
     }
 
@@ -35,7 +35,7 @@ class PelangganController extends Controller
         ]);
 
         Pelanggan::create([
-            'id_user' => $Pelanggan->id
+            'id_user' => $Pelanggan->id,
         ]);
 
         return redirect()->route('list.pelanggan')->with('success', 'Pelanggan berhasil ditambahkan.');

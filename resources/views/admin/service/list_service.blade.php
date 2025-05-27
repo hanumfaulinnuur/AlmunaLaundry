@@ -26,41 +26,41 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($service as $key => $ser)
+                        @forelse ($service as $key => $item)
                             <tr>
-                                <th scope="row" class="text-center">{{ $key + 1 }}</th>
-                                <td>{{ $ser->nama_service }}</td>
-                                <td class="td-deskripsi">{{ $ser->deskripsi }}</td>
-                                <td>RP. {{ $ser->harga }}</td>
+                                <th scope="row" class="text-center">{{ $service->firstItem() + $key }}</th>
+                                <td>{{ $item->nama_service }}</td>
+                                <td class="td-deskripsi">{{ $item->deskripsi }}</td>
+                                <td>RP. {{ $item->harga }}</td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a class="btn btn-primary" href="{{ route('admin.services.edit', $ser->id) }}">
+                                        <a class="btn btn-primary" href="{{ route('admin.services.edit', $item->id) }}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
 
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#modalHapus{{ $ser->id }}">
+                                            data-bs-target="#modalHapus{{ $item->id }}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </button>
                                     </div>
 
                                     <!-- Modal tetap di luar div d-flex -->
-                                    <div class="modal fade" id="modalHapus{{ $ser->id }}" tabindex="-1"
-                                        aria-labelledby="modalHapusLabel{{ $ser->id }}" aria-hidden="true">
+                                    <div class="modal fade" id="modalHapus{{ $item->id }}" tabindex="-1"
+                                        aria-labelledby="modalHapusLabel{{ $item->id }}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalHapusLabel{{ $ser->id }}">
+                                                    <h5 class="modal-title" id="modalHapusLabel{{ $item->id }}">
                                                         Konfirmasi Hapus</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     Apakah kamu yakin ingin menghapus layanan
-                                                    <strong>{{ $ser->nama_service }}</strong>?
+                                                    <strong>{{ $item->nama_service }}</strong>?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <form action="{{ route('admin.services.destroy', $ser->id) }}"
+                                                    <form action="{{ route('admin.services.destroy', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -82,6 +82,9 @@
                         @endforelse
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-end my-4">
+                    {{ $service->links() }}
+                </div>
             </div>
         </div>
     </main>

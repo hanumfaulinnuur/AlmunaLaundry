@@ -28,63 +28,66 @@
                     </div>
                 </div>
                 <hr>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr class="text-center">
-                            <th scope="col">No</th>
-                            <th scope="col">No Invoice</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Jenis Service</th>
-                            <th scope="col">Tanggal Order</th>
-                            <th scope="col">Status Pembayaran</th>
-                            <th scope="col">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        @forelse ($listOrderPembayaran as $index => $listOrderPembayaran)
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
                             <tr class="text-center">
-                                <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $listOrderPembayaran->no_invoice }}</td>
-                                <td>{{ $listOrderPembayaran->Pelanggan->user->name ?? '-' }}</td>
-                                <td>{{ $listOrderPembayaran->Service->nama_service ?? '-' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($listOrderPembayaran->tanggal_order)->translatedFormat('l, d F Y') }}
-                                </td>
-                                <td>
-                                    @php
-                                        $status =
-                                            $listOrderPembayaran->Pembayaran->status_pembayaran ?? 'Belum Dibayar';
-                                    @endphp
-                                    <span
-                                        class="badge 
+                                <th scope="col">No</th>
+                                <th scope="col">No Invoice</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Jenis Service</th>
+                                <th scope="col">Tanggal Order</th>
+                                <th scope="col">Status Pembayaran</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            @forelse ($listOrderPembayaran as $key => $item)
+                                <tr class="text-center">
+                                    <th scope="row">{{ $listOrderPembayaran->firstItem() + $key }}</th>
+                                    <td>{{ $item->no_invoice }}</td>
+                                    <td>{{ $item->Pelanggan->user->name ?? '-' }}</td>
+                                    <td>{{ $item->Service->nama_service ?? '-' }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_order)->translatedFormat('l, d F Y') }}
+                                    </td>
+                                    <td>
+                                        @php
+                                            $status = $item->Pembayaran->status_pembayaran ?? 'Belum Dibayar';
+                                        @endphp
+                                        <span
+                                            class="badge 
                                         @if ($status == 'berhasil') bg-success  
                                         @elseif($status == 'menunggu') bg-warning text-dark  
                                         @else bg-secondary @endif">
-                                        {{ ucfirst($status) }}
-                                    </span>
-                                </td>
-                                <td>
-                                    @if (optional($listOrderPembayaran->Pembayaran)->jenis_pembayaran === 'cash' &&
-                                            optional($listOrderPembayaran->Pembayaran)->status_pembayaran === 'pending')
-                                        <form action="{{ route('admin.validasi.cash', $listOrderPembayaran->id) }}"
-                                            method="POST">
-                                            @csrf
-                                            <button class="btn btn-success btn-sm"
-                                                onclick="return confirm('Validasi pembayaran cash ini?')">
-                                                Validasi Pembayaran
-                                            </button>
-                                        </form>
-                                    @else
-                                        <span class="text-muted">Tidak tersedia</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-muted">Data Kosong</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                            {{ ucfirst($status) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if (optional($item->Pembayaran)->jenis_pembayaran === 'cash' &&
+                                                optional($item->Pembayaran)->status_pembayaran === 'pending')
+                                            <form action="{{ route('admin.validasi.cash', $item->id) }}" method="POST">
+                                                @csrf
+                                                <button class="btn btn-success btn-sm"
+                                                    onclick="return confirm('Validasi pembayaran cash ini?')">
+                                                    Validasi Pembayaran
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="text-muted">Tidak tersedia</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">Data Kosong</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end my-4">
+                    {{ $listOrderPembayaran->links() }}
+                </div>
             </div>
         </div>
     </main>

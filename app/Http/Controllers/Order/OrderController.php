@@ -58,7 +58,7 @@ class OrderController extends Controller
     {
         $listOrderValidasi = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'proses validasi')
-            ->get();
+            ->paginate(10);
 
         return view('admin.order_validasi.list_order_masuk', compact('listOrderValidasi'));
     }
@@ -77,19 +77,11 @@ class OrderController extends Controller
             'total_harga' => 'required|numeric',
         ]);
 
-        // Cari transaksi berdasarkan ID
         $transaksi = Transaksi::findOrFail($id);
-
-        // Update data transaksi dengan data yang tervalidasi
         $transaksi->update($validated);
-
-        // Perbarui status transaksi menjadi 'sedang di proses'
         $transaksi->status_transaksi = 'sedang di proses';
-
-        // Simpan perubahan status
         $transaksi->save();
 
-        // Kembali ke daftar order
         return redirect()->route('order-list-validasi');
     }
 
@@ -97,7 +89,7 @@ class OrderController extends Controller
     {
         $listOrderProses = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'sedang di proses')
-            ->get();
+            ->paginate(10);
 
         return view('admin.order_validasi.list_order_diproses', compact('listOrderProses'));
     }
@@ -115,7 +107,7 @@ class OrderController extends Controller
     public function listOrderMenungguPembayaran() {
         $listOrderPembayaran = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'menunggu pembayaran')
-            ->get();
+            ->paginate(10);
 
         return view('admin.order_validasi.list_order_menunggu_pembayaran', compact('listOrderPembayaran'));
     }
