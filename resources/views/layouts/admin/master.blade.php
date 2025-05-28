@@ -8,10 +8,9 @@
     <title>Almuna Laundry | @yield('title')</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+                
     <!-- Favicons -->
     <link href="{{ asset('assets/back_asset/img/blue washing machine.png') }}" rel="icon">
-    <link href="{{ asset('assets/back_asset/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">

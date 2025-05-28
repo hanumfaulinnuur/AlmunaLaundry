@@ -92,7 +92,7 @@ Route::middleware('auth')->group(function () {
 
 // Beranda Admin Controller
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/beranda', [BerandaController::class, 'index']);
+    Route::get('/beranda', [BerandaController::class, 'index'])->name('admin.beranda');
 });
 
 // Service Controller
