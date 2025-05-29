@@ -11,27 +11,34 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="card-title mb-0">List Validasi Data Pesanan</h5>
-                    <div class="dropdown">
-                        <button class="btn custom-dropdown-toggle d-flex justify-content-between align-items-center"
-                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span>Pilih Status Order</span>
-                            <i class="bi bi-chevron-down"></i>
-                        </button>
-                        <ul class="dropdown-menu custom-dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('order-list-validasi') }}">Proses Validasi</a></li>
-                            <li><a class="dropdown-item" href="{{ route('order-list-diproses') }}">Sedang Di Proses</a></li>
-                            <li><a class="dropdown-item" href="{{ route('order-list-pembayaran') }}">Belum Di Bayar</a>
-                            </li>
-                        </ul>
+                <div class="row mb-3">
+                    <div class="col-12 col-md-6 text-center text-md-start">
+                        <h5 class="card-title mb-2 mb-md-0">List Validasi Data Pesanan</h5>
+                    </div>
+                    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
+                        <div class="dropdown">
+                            <button class="btn custom-dropdown-toggle d-flex justify-content-between align-items-center"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span>Pilih Status Order</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu custom-dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('order-list-validasi') }}">Proses Validasi</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ route('order-list-diproses') }}">Sedang Di Proses</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ route('order-list-pembayaran') }}">Belum Di Bayar</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
                 <hr>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
-                            <tr class="text-center">
+                            <tr class="text-center align-middle">
                                 <th scope="col">No</th>
                                 <th scope="col">No Invoice</th>
                                 <th scope="col">Nama</th>

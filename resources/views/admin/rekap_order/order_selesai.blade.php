@@ -15,7 +15,8 @@
                     </div>
 
                     {{-- Filter tanggal di kanan --}}
-                    <form method="GET" action="{{ route('admin.beranda') }}" class="d-flex flex-wrap gap-2 align-items-end">
+                    <form method="GET" action="{{ route('admin.beranda') }}"
+                        class="d-flex flex-wrap gap-2 align-items-end">
                         <div class="d-flex flex-column">
                             <label for="start_date" class="form-label mb-1 small">Tanggal Mulai</label>
                             <input type="date" id="start_date" name="start_date" class="form-control form-control-sm"
@@ -38,7 +39,7 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
-                            <tr class="text-center">
+                            <tr class="text-center align-middle">
                                 <th scope="col">No Invoice</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Jenis Service</th>
@@ -55,7 +56,8 @@
                                     <td>{{ $item->Pelanggan->user->name ?? '-' }}</td>
                                     <td>{{ $item->Service->nama_service ?? '-' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($item->tanggal_order)->translatedFormat('l, d F Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->translatedFormat('l, d F Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->translatedFormat('l, d F Y') }}
+                                    </td>
                                     <td>{{ rtrim(rtrim(number_format($item->total_berat, 2, '.', ''), '0'), '.') }} Kg</td>
                                     <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                 </tr>

@@ -816,6 +816,50 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# Table
+--------------------------------------------------------------*/
+/* Ukuran font default untuk desktop */
+body,
+table,
+.card-title,
+.btn,
+p {
+    font-size: 16px;
+}
+
+/* Untuk table header dan isi */
+table th,
+table td {
+    font-size: 14px;
+}
+
+/* Media query untuk layar kecil (mobile) */
+@media (max-width: 768px) {
+    body,
+    table,
+    .card-title,
+    .btn,
+    p {
+        font-size: 14px;
+    }
+
+    table th,
+    table td {
+        font-size: 12px;
+    }
+
+    /* Contoh mengubah ukuran judul */
+    .card-title {
+        font-size: 18px;
+    }
+
+    /* Tombol yang agak lebih kecil di mobile */
+    .btn {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+}
+/*--------------------------------------------------------------
 # Dashboard
 --------------------------------------------------------------*/
 /* Filter dropdown */
@@ -1110,19 +1154,6 @@ h6 {
 
 .profile .profile-edit img {
     max-width: 120px;
-}
-
-/*--------------------------------------------------------------
-# F.A.Q Page
---------------------------------------------------------------*/
-.faq .basic h6 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #4154f1;
-}
-
-.faq .basic p {
-    color: #6980aa;
 }
 
 /*--------------------------------------------------------------

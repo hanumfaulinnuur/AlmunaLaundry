@@ -11,15 +11,24 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="card-title mb-0">List Data Pelanggan</h5>
-                    <a class="btn btn-primary mt-4 me-4" href="{{ route('tambah.pelanggan') }}">Tambah Pelanggan</a>
+                <h5 class="card-title mb-0">List Data Pelanggan</h5>
+                <div class="d-flex justify-content-between gap-3 align-items-center">
+                    <div>
+                        <a class="btn btn-primary" href="{{ route('tambah.pelanggan') }}">Tambah Pelanggan</a>
+                    </div>
+                    <div>
+                        <form action="{{ route('list.pelanggan') }}" method="GET" class="d-flex" role="search">
+                            <input type="text" name="search" class="form-control me-2"
+                                placeholder="Cari Nama Pelanggan..." value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-outline-primary">Cari</button>
+                        </form>
+                    </div>
                 </div>
                 <hr>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered mt-4">
                         <thead>
-                            <tr class="text-center">
+                            <tr class="text-center align-middle">
                                 <th scope="col">No</th>
                                 <th scope="col">Nama Pelanggan</th>
                                 <th scope="col">Email</th>
