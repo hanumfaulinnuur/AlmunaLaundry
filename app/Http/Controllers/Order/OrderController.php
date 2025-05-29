@@ -8,7 +8,9 @@ use App\Models\Pelanggan;
 use App\Models\Transaksi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Helpers\WhatsappHelper;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 
 class OrderController extends Controller
 {
@@ -96,15 +98,26 @@ class OrderController extends Controller
 
     public function konfirmasiProsesSelesai($id)
     {
-        $transaksi = Transaksi::findOrFail($id);
+        $transaksi = Transaksi::with('Pelanggan')->findOrFail($id);
         $transaksi->status_transaksi = 'menunggu pembayaran';
         $transaksi->tanggal_selesai = now();
         $transaksi->save();
 
+        $noHp = $transaksi->Pelanggan->no_telepon;
+        $nama = $transaksi->Pelanggan->user->name ?? 'Pelanggan';
+        $invoice = $transaksi->no_invoice;
+        $service = $transaksi->service->nama_service;
+        $total_berat = $transaksi->total_berat;
+        $total_harga = $transaksi->total_harga ? number_format($transaksi->total_harga, 0, ',', '.') : '-';
+        $pesan = View::make('order.notifikasi_wa', compact('nama', 'invoice', 'service', 'total_berat', 'total_harga'))->render();
+
+        WhatsappHelper::send($noHp, $pesan);
+
         return redirect()->route('order-list-diproses');
     }
 
-    public function listOrderMenungguPembayaran() {
+    public function listOrderMenungguPembayaran()
+    {
         $listOrderPembayaran = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'menunggu pembayaran')
             ->paginate(10);
