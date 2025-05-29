@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\KonfirmasiAkunPelangganMail;
 
 class PelangganController extends Controller
 {
@@ -44,6 +46,7 @@ class PelangganController extends Controller
             'id_user' => $Pelanggan->id,
         ]);
 
+        Mail::to($Pelanggan->email)->send(new KonfirmasiAkunPelangganMail($Pelanggan));
         return redirect()->route('list.pelanggan')->with('success', 'Pelanggan berhasil ditambahkan.');
     }
 }
