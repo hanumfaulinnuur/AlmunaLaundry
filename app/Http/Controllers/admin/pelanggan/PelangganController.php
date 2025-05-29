@@ -9,9 +9,15 @@ use App\Http\Controllers\Controller;
 
 class PelangganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pelanggan = User::with('pelanggan')->where('role', 'pelanggan')->paginate(10);
+        $search = $request->input('search');
+        $pelanggan = User::with('pelanggan')
+            ->where('role', 'pelanggan')
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%");
+            })
+            ->paginate(10);
         return view('admin.pelanggan.list_pelanggan', compact('pelanggan'));
     }
 

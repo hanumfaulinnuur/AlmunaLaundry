@@ -1,6 +1,7 @@
 @extends('layouts.pelanggan.master')
 @section('title', 'saldo')
 @section('content')
+
     <div class="container">
         <div class="row justify-content-center gap-4 mt-5">
             {{-- card untuk slide nama --}}
@@ -25,12 +26,12 @@
                 <div class="card shadow p-5 bg-body-tertiary rounded mb-5">
                     <div style="width: 100%;">
                         <h4 class="section-title-profile">Riwayat Transaksi</h4>
-                        <div class="container mt-4">
+                        <div class="container mt-4 transaction-scroll-saldo ">
                             @if ($riwayat->isEmpty())
                                 <p class="text-muted">Belum ada riwayat transaksi.</p>
                             @else
                                 @foreach ($riwayat as $item)
-                                    <div class="row align-items-center transaction-item">
+                                    <div class="row align-items-center transaction-item mb-3">
                                         <div class="col-auto">
                                             <div
                                                 class="icon-circle {{ $item->jenis_transaksi == 'debit' ? 'bg-danger' : 'bg-success' }}">
