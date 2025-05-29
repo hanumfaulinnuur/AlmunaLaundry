@@ -113,6 +113,17 @@ body {
     width: 100% !important;
 }
 
+.link-forgot-password {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--br-color);
+}
+.link-forgot-password:hover {
+    transform: scale(1.05);
+    font-weight: 700;
+    cursor: pointer;
+}
+
 /* end */
 
 .box-area {
