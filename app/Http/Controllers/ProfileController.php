@@ -46,11 +46,15 @@ class ProfileController extends Controller
         $user->fill($request->only('name', 'email'));
         $user->save();
 
+        // Proses format nomor telepon ke format 62xxxxxx
+        $rawPhone = $request->input('no_telepon');
+        $formattedPhone = $this->formatPhoneNumber($rawPhone);
+
         // Update data pelanggan
         $pelanggan = $user->pelanggan;
         if ($pelanggan) {
             $pelanggan->update([
-                'no_telepon' => $request->input('no_telepon'),
+                'no_telepon' => $formattedPhone,
                 'alamat' => $request->input('alamat'),
                 'latitude' => $request->input('latitude'),
                 'longitude' => $request->input('longitude'),
@@ -60,7 +64,19 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
+    private function formatPhoneNumber($number)
+    {
+        $number = preg_replace('/[^0-9]/', '', $number);
+
+        if (substr($number, 0, 1) === '0') {
+            $number = '62' . substr($number, 1);
+        }
+        elseif (substr($number, 0, 2) === '62') {
+        }
+        else {
+            $number = '62' . $number;
+        }
+
+        return $number;
+    }
 }

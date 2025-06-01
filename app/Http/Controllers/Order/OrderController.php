@@ -20,50 +20,65 @@ class OrderController extends Controller
         return view('order.list_layanan', compact('listLayanan'));
     }
 
-    public function store(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'id_service' => 'required|exists:services,id',
-        ]);
+public function store(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'id_service' => 'required|exists:services,id',
+    ]);
 
-        // Ambil user yang sedang login
-        $user = auth()->user();
+    // Ambil user yang sedang login
+    $user = auth()->user();
 
-        // Ambil data pelanggan berdasarkan user login
-        $pelanggan = Pelanggan::where('id_user', $user->id)->first();
+    // Ambil data pelanggan berdasarkan user login
+    $pelanggan = Pelanggan::where('id_user', $user->id)->first();
 
-        // Kalau data pelanggan tidak ditemukan
-        if (!$pelanggan) {
-            return redirect()->back()->with('error', 'Data pelanggan tidak ditemukan!');
-        }
-
-        // Ambil data layanan
-        $service = Service::findOrFail($request->id_service);
-
-        $transaksi = new Transaksi();
-        $transaksi->id_pelanggan = $pelanggan->id;
-        $transaksi->id_service = $service->id;
-        $transaksi->no_invoice = 'INV-' . strtoupper(Str::random(10));
-        $transaksi->tanggal_order = Carbon::now();
-        $transaksi->total_berat = null;
-        $transaksi->total_harga = null;
-        $transaksi->status_transaksi = 'proses validasi';
-        $transaksi->save();
-
-        return redirect()->route('list-service')->with('success', 'Order berhasil dibuat!');
+    // Kalau data pelanggan tidak ditemukan
+    if (!$pelanggan) {
+        return redirect()->back()->with('error', 'Data pelanggan tidak ditemukan!');
     }
+
+    // Cek nomor telepon
+    if (!$pelanggan->no_telepon || trim($pelanggan->no_telepon) == '') {
+        // Kalau no telepon kosong, redirect ke halaman layanan dengan flag modal muncul
+        return redirect()->route('list-service')->with('phone_missing', true);
+    }
+
+    // Ambil data layanan
+    $service = Service::findOrFail($request->id_service);
+
+    $transaksi = new Transaksi();
+    $transaksi->id_pelanggan = $pelanggan->id;
+    $transaksi->id_service = $service->id;
+    $transaksi->no_invoice = 'INV-' . strtoupper(Str::random(10));
+    $transaksi->tanggal_order = Carbon::now();
+    $transaksi->total_berat = null;
+    $transaksi->total_harga = null;
+    $transaksi->status_transaksi = 'proses validasi';
+    $transaksi->save();
+
+    return redirect()->route('list-service')->with('success', 'Order berhasil dibuat!');
+}
+
 
     // Admin
 
-    public function listOrderValidasi()
-    {
-        $listOrderValidasi = Transaksi::with(['Pelanggan.user', 'Service'])
-            ->where('status_transaksi', 'proses validasi')
-            ->paginate(10);
+    public function listOrderValidasi(Request $request)
+{
+    $search = $request->input('search');
 
-        return view('admin.order_validasi.list_order_masuk', compact('listOrderValidasi'));
-    }
+    $listOrderValidasi = Transaksi::with(['Pelanggan.user', 'Service'])
+        ->where('status_transaksi', 'proses validasi')
+        ->when($search, function ($query, $search) {
+            $query->whereHas('Pelanggan.user', function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            });
+        })
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('admin.order_validasi.list_order_masuk', compact('listOrderValidasi'));
+}
 
     public function validasiOrder(string $id)
     {
@@ -84,14 +99,21 @@ class OrderController extends Controller
         $transaksi->status_transaksi = 'sedang di proses';
         $transaksi->save();
 
-        return redirect()->route('order-list-validasi');
+        return redirect()->route('order-list-validasi')->with('success', 'Order Berhasil Di validasi');
     }
 
-    public function listOrderDiproses()
+    public function listOrderDiproses(Request $request)
     {
+        $search = $request->input('search');
         $listOrderProses = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'sedang di proses')
-            ->paginate(10);
+            ->when($search, function ($query, $search) {
+                $query->whereHas('Pelanggan.user', function ($q) use ($search){
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.order_validasi.list_order_diproses', compact('listOrderProses'));
     }
@@ -116,11 +138,18 @@ class OrderController extends Controller
         return redirect()->route('order-list-diproses');
     }
 
-    public function listOrderMenungguPembayaran()
+    public function listOrderMenungguPembayaran(Request $request)
     {
+        $search = $request->input('search');
         $listOrderPembayaran = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'menunggu pembayaran')
-            ->paginate(10);
+            ->when($search, function ($query, $search) {
+                $query->whereHas('Pelanggan.user', function ($q) use ($search){
+                    $q->where('name', 'like', "%{$search}%");
+                });
+                })
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.order_validasi.list_order_menunggu_pembayaran', compact('listOrderPembayaran'));
     }

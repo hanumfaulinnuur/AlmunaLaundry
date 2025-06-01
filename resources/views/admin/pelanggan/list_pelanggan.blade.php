@@ -11,14 +11,15 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <h5 class="card-title mb-0">List Data Pelanggan</h5>
-                <div class="d-flex justify-content-between gap-3 align-items-center">
+                <h5 class="card-title mb-0">List Data Pelanggan Terdaftar</h5>
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
                     <div>
                         <a class="btn btn-primary" href="{{ route('tambah.pelanggan') }}">Tambah Pelanggan</a>
                     </div>
                     <div>
-                        <form action="{{ route('list.pelanggan') }}" method="GET" class="d-flex" role="search">
-                            <input type="text" name="search" class="form-control me-2"
+                        <form action="{{ route('list.pelanggan') }}" method="GET"
+                            class="d-flex flex-column flex-sm-row gap-2" role="search">
+                            <input type="text" name="search" class="form-control small-placeholder"
                                 placeholder="Cari Nama Pelanggan..." value="{{ request('search') }}">
                             <button type="submit" class="btn btn-outline-primary">Cari</button>
                         </form>
@@ -66,5 +67,4 @@
             </div>
         </div>
     </main>
-
 @endsection

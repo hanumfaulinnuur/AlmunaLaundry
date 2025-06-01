@@ -11,26 +11,31 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="row mb-3">
-                    <div class="col-12 col-md-6 text-center text-md-start">
-                        <h5 class="card-title mb-2 mb-md-0">List Validasi Data Pesanan</h5>
+                <h5 class="card-title mb-0 mb-md-0">List Order Menunggu Pembayaran</h5>
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+                    <div class="dropdown">
+                        <button
+                            class="btn custom-dropdown-toggle d-flex align-items-center justify-content-between align-items-center"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>Pilih Status Order</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu custom-dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('order-list-validasi') }}">Proses Validasi</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('order-list-diproses') }}">Sedang Di Proses</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('order-list-pembayaran') }}">Belum Di Bayar</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
-                        <div class="dropdown">
-                            <button class="btn custom-dropdown-toggle d-flex justify-content-between align-items-center"
-                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span>Pilih Status Order</span>
-                                <i class="bi bi-chevron-down"></i>
-                            </button>
-                            <ul class="dropdown-menu custom-dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('order-list-validasi') }}">Proses Validasi</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('order-list-diproses') }}">Sedang Di Proses</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('order-list-pembayaran') }}">Belum Di Bayar</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div>
+                        <form action="{{ route('order-list-pembayaran') }}" method="GET"
+                            class="d-flex flex-column flex-sm-row gap-2" role="search">
+                            <input type="text" name="search" class="form-control small-placeholder"
+                                placeholder="Cari Nama Pelanggan..." value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-outline-primary">Cari</button>
+                        </form>
                     </div>
                 </div>
                 <hr>
@@ -71,13 +76,39 @@
                                     <td>
                                         @if (optional($item->Pembayaran)->jenis_pembayaran === 'cash' &&
                                                 optional($item->Pembayaran)->status_pembayaran === 'pending')
-                                            <form action="{{ route('admin.validasi.cash', $item->id) }}" method="POST">
-                                                @csrf
-                                                <button class="btn btn-success btn-sm"
-                                                    onclick="return confirm('Validasi pembayaran cash ini?')">
-                                                    Validasi Pembayaran
-                                                </button>
-                                            </form>
+                                            <!-- Tombol buka modal -->
+                                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#modalValidasi{{ $item->id }}">
+                                                Validasi Pembayaran
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <!-- Modal Validasi Pembayaran -->
+                                            <div class="modal fade" id="modalValidasi{{ $item->id }}" tabindex="-1"
+                                                aria-labelledby="modalValidasiLabel{{ $item->id }}" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content text-center"
+                                                        style="border-radius: 10px; padding: 20px;">
+                                                        <div class="modal-body">
+                                                            <p class="fw-bold" style="font-size: 20px;">
+                                                                Apakah Anda yakin ingin memvalidasi pembayaran cash ini?
+                                                            </p>
+                                                            <div class="d-flex justify-content-center mt-4 gap-3">
+                                                                <button type="button"
+                                                                    class="btn btn-outline-secondary px-4"
+                                                                    data-bs-dismiss="modal">Batal</button>
+                                                                <form
+                                                                    action="{{ route('admin.validasi.cash', $item->id) }}"
+                                                                    method="POST" class="d-inline">
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-success px-4">Ya,
+                                                                        Validasi</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @else
                                             <span class="text-muted">Tidak tersedia</span>
                                         @endif
@@ -91,6 +122,7 @@
                         </tbody>
                     </table>
                 </div>
+
                 <div class="d-flex justify-content-end my-4">
                     {{ $listOrderPembayaran->links() }}
                 </div>

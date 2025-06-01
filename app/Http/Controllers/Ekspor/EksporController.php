@@ -23,8 +23,11 @@ class EksporController extends Controller
         return $pdf->stream('invoice_' . $transaksi->no_invoice . '.pdf');
     }
 
-    public function exportRekapOrderExcel()
-    {
-        return Excel::download(new RekapOrderEkspor(), 'Rekap.xlsx');
-    }
+    public function exportRekapOrderExcel(Request $request)
+{
+    $startDate = $request->query('start_date');
+    $endDate = $request->query('end_date');
+
+    return Excel::download(new RekapOrderEkspor($startDate, $endDate), 'Rekap.xlsx');
+}
 }

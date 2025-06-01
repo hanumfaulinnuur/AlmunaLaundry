@@ -81,6 +81,8 @@ Route::get('/export-excel', [EksporController::class, 'exportRekapOrderExcel'])-
 
 //Rekap Order Selesai
 Route::get('/rekap-order', [RekapOrderController::class, 'orderSelesai'])->name('rekap-order-selesai');
+Route::get('/rekap-order-detail', [RekapOrderController::class, 'orderDetail'])->name('rekap-order-detail');
+
 
 //Saldo Controller
 Route::middleware('auth')->group(function () {
