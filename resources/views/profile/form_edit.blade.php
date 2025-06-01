@@ -85,7 +85,7 @@
                                     <label class="form-label fw-semibold field">Masukan Titik Lokasi</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="map" id="map"></div>
+                                    <div id="map" style="height: 400px; border: 1px solid #ccc;"></div>
                                 </div>
                             </div>
 
@@ -93,7 +93,8 @@
                             <div class="mt-4">
                                 <a href="{{ route('profile.edit') }}"
                                     class="btn btn-outline-warning fw-semibold px-4">Kembali</a>
-                                <button class="btn btn-warning text-white fw-semibold px-4">Ubah Profil</button>
+                                <button type="submit" class="btn btn-warning text-white fw-semibold px-4">Ubah
+                                    Profil</button>
                             </div>
                         </form>
                     </div>
@@ -106,11 +107,12 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
-    {{-- Script Leaflet --}}
+    {{-- Script Leaflet dengan Geolocation --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var defaultLat = {{ old('latitude', $user->pelanggan->latitude ?? -6.2) }};
-            var defaultLng = {{ old('longitude', $user->pelanggan->longitude ?? 106.816666) }};
+            // Koordinat default dari server/database, atau fallback ke Jakarta jika kosong
+            var defaultLat = parseFloat("{{ old('latitude', $user->pelanggan->latitude ?? '-6.2') }}");
+            var defaultLng = parseFloat("{{ old('longitude', $user->pelanggan->longitude ?? '106.816666') }}");
 
             var map = L.map('map').setView([defaultLat, defaultLng], 13);
 
@@ -123,8 +125,8 @@
             }).addTo(map);
 
             function updateInput(latlng) {
-                document.getElementById('latitude').value = latlng.lat;
-                document.getElementById('longitude').value = latlng.lng;
+                document.getElementById('latitude').value = latlng.lat.toFixed(7);
+                document.getElementById('longitude').value = latlng.lng.toFixed(7);
             }
 
             updateInput(marker.getLatLng());
@@ -137,6 +139,32 @@
                 marker.setLatLng(e.latlng);
                 updateInput(e.latlng);
             });
+
+            // Gunakan Geolocation API jika tersedia dan user mengizinkan
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var userLat = position.coords.latitude;
+                        var userLng = position.coords.longitude;
+
+                        // Update peta ke lokasi device
+                        map.setView([userLat, userLng], 13);
+
+                        // Update posisi marker
+                        marker.setLatLng([userLat, userLng]);
+
+                        // Update nilai input
+                        updateInput(marker.getLatLng());
+                    },
+                    function(error) {
+                        console.warn('Geolocation error:', error.message);
+                        // Jika error, tetap pakai default
+                    }
+                );
+            } else {
+                console.warn('Geolocation not supported by this browser.');
+                // Jika tidak support geolocation, pakai default
+            }
         });
     </script>
 @endsection

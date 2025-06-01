@@ -11,29 +11,33 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                <div class="row mb-3">
-                    <div class="col-12 col-md-6 text-center text-md-start">
-                        <h5 class="card-title mb-2 mb-md-0">List Validasi Data Pesanan</h5>
+                <h5 class="card-title mb-0 mb-md-0">List Validasi Data Order Layanan</h5>
+                <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+                    <div class="dropdown">
+                        <button
+                            class="btn custom-dropdown-toggle d-flex align-items-center justify-content-between align-items-center"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>Pilih Status Order</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <ul class="dropdown-menu custom-dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('order-list-validasi') }}">Proses Validasi</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('order-list-diproses') }}">Sedang Di Proses</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('order-list-pembayaran') }}">Belum Di Bayar</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end">
-                        <div class="dropdown">
-                            <button class="btn custom-dropdown-toggle d-flex justify-content-between align-items-center"
-                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span>Pilih Status Order</span>
-                                <i class="bi bi-chevron-down"></i>
-                            </button>
-                            <ul class="dropdown-menu custom-dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('order-list-validasi') }}">Proses Validasi</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('order-list-diproses') }}">Sedang Di Proses</a>
-                                </li>
-                                <li><a class="dropdown-item" href="{{ route('order-list-pembayaran') }}">Belum Di Bayar</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div>
+                        <form action="{{ route('order-list-validasi') }}" method="GET"
+                            class="d-flex flex-column flex-sm-row gap-2" role="search">
+                            <input type="text" name="search" class="form-control small-placeholder"
+                                placeholder="Cari Nama Pelanggan..." value="{{ request('search') }}">
+                            <button type="submit" class="btn btn-outline-primary">Cari</button>
+                        </form>
                     </div>
                 </div>
-
                 <hr>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
@@ -54,7 +58,8 @@
                                     <td>{{ $item->no_invoice }}</td>
                                     <td>{{ $item->Pelanggan->user->name ?? '-' }}</td>
                                     <td>{{ $item->Service->nama_service ?? '-' }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_order)->translatedFormat('l, d F Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tanggal_order)->translatedFormat('l, d F Y') }}
+                                    </td>
                                     <td>
                                         <a href="{{ route('order-validasi', $item->id) }}"
                                             class="btn btn-success">Validasi</a>

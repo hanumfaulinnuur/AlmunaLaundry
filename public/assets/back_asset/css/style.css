@@ -13,7 +13,7 @@
 }
 
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Poppins", serif !important;
     background: #f6f9ff;
     color: #444444;
 }
@@ -116,6 +116,8 @@ h6 {
     justify-content: space-between;
     align-items: center;
     text-align: left;
+    height: 42px;
+    /* margin-top: 12px; */
 }
 
 .custom-dropdown-toggle span {
@@ -128,7 +130,7 @@ h6 {
 }
 
 .custom-dropdown-menu {
-    width: 100%;
+    width: 45%;
     border-radius: 10px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
@@ -298,6 +300,11 @@ h6 {
     font-weight: 500;
     color: #012970;
     font-family: "Poppins", sans-serif;
+}
+
+.small-placeholder {
+    max-width: 300px;
+    width: 100%;
 }
 
 .card-title span {
@@ -821,7 +828,6 @@ h6 {
 /* Ukuran font default untuk desktop */
 body,
 table,
-.card-title,
 .btn,
 p {
     font-size: 16px;
@@ -857,6 +863,10 @@ table td {
     .btn {
         font-size: 13px;
         padding: 6px 12px;
+    }
+
+    .custom-dropdown-toggle {
+        margin-bottom: 10px; /* margin lebih kecil di layar kecil */
     }
 }
 /*--------------------------------------------------------------

@@ -34,7 +34,7 @@
             @endforeach
         </div>
 
-        <!-- Modal Konfirmasi (hanya 1x, bukan di dalam foreach) -->
+        <!-- Modal Konfirmasi -->
         <div class="modal fade" id="konfirmasiModal" tabindex="-1" aria-labelledby="konfirmasiModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -44,7 +44,26 @@
                         <div class="d-flex justify-content-center gap-5">
                             <button type="button" class="btn btn-outline-warning btn-modal"
                                 data-bs-dismiss="modal">Batal</button>
-                            <button type="button" class="btn btn-order" id="btnLanjut">Order Sekarang</button>
+                            <button type="button" class="btn btn-order btn-modal" id="btnLanjut">Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Nomor Telepon Kosong -->
+        <div class="modal fade" id="phoneMissingModal" tabindex="-1" aria-labelledby="phoneMissingModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content text-center">
+                    <div class="modal-body p-5">
+                        <h5 class="mb-4">Nomor telepon kamu belum diisi. Mohon lengkapi data nomor telepon terlebih
+                            dahulu.</h5>
+                        <div class="d-flex justify-content-center gap-3">
+                            <button type="button" class="btn btn-outline-warning btn-modal"
+                                data-bs-dismiss="modal">Kembali</button>
+                            <a href="{{ route('profile.form.edit') }}" class="btn btn-order btn-modal">Isi Data</a>
                         </div>
                     </div>
                 </div>
@@ -57,7 +76,6 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content text-center">
                     <div class="modal-header">
-                        <!-- Tombol close di sini -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-5">
@@ -85,16 +103,31 @@
             });
         });
 
-        // Saat klik "Order Sekarang" di dalam modal
+        // Saat klik "Order Sekarang" di dalam modal konfirmasi
         document.getElementById('btnLanjut').addEventListener('click', function() {
             if (selectedServiceId) {
                 document.getElementById('idServiceInput').value = selectedServiceId;
                 document.getElementById('formOrder').submit();
 
-                // Tampilkan modal order sedang diproses setelah order berhasil
-                $('#konfirmasiModal').modal('hide'); // Tutup modal konfirmasi
-                $('#orderProcessedModal').modal('show'); // Tampilkan modal order sedang diproses
+                // Tutup modal konfirmasi
+                let konfirmasiModalEl = document.getElementById('konfirmasiModal');
+                let konfirmasiModal = bootstrap.Modal.getInstance(konfirmasiModalEl);
+                if (konfirmasiModal) {
+                    konfirmasiModal.hide();
+                }
+
+                // Jangan tampilkan modal order processed di sini, 
+                // modal akan tampil berdasarkan session flash setelah reload halaman
             }
         });
+
+        // Tampilkan modal sesuai session flash dari server
+        @if (session('phone_missing'))
+            let phoneMissingModal = new bootstrap.Modal(document.getElementById('phoneMissingModal'));
+            phoneMissingModal.show();
+        @elseif (session('success'))
+            let orderProcessedModal = new bootstrap.Modal(document.getElementById('orderProcessedModal'));
+            orderProcessedModal.show();
+        @endif
     </script>
 @endsection
