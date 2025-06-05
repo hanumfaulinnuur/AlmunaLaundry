@@ -3,10 +3,10 @@
 @section('content')
 
     <div class="container">
-        <div class="row justify-content-center gap-4 mt-5">
+        <div class="row justify-content-center gap-2 mt-5">
             {{-- card untuk slide nama --}}
-            <div class="col-md-3">
-                <div class="card text-center shadow p-3 mb-5 bg-body-tertiary rounded">
+            <div class="col-12 col-md-3">
+                <div class="card text-center shadow p-3 mb-3 bg-body-tertiary rounded">
                     <div class="p-3">
                         <img class="img-fluid" src="{{ asset('assets/front_asset/image/avatar person.png') }}" alt="avatar"
                             width="100px">
@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-12 col-md-8">
                 <div class="card shadow p-5 bg-body-tertiary rounded mb-5">
                     <div style="width: 100%;">
                         <h4 class="section-title-profile">Riwayat Transaksi</h4>

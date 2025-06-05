@@ -128,13 +128,9 @@ class PembayaranController extends Controller
         $user = Auth::user();
         $pelanggan = $user->Pelanggan;
 
-        if (!$pelanggan) {
-            return back()->with('error', 'Data pelanggan tidak ditemukan.');
-        }
-
-        if ($pelanggan->deposit_saldo < $transaksi->total_harga) {
-            return back()->with('error', 'Saldo tidak mencukupi.');
-        }
+         if ($pelanggan->deposit_saldo < $transaksi->total_harga) {
+        return back()->with('saldo_kurang', true);
+    }
 
         $pelanggan->deposit_saldo -= $transaksi->total_harga;
         $pelanggan->save();

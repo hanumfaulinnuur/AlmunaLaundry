@@ -26,7 +26,7 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Hi, {{ Auth::user()->name }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
+                    <ul class="dropdown-menu">
                         <li><a class="dropdown-item p-2" href="{{ route('profile.update') }}"><i
                                     class="bi bi-person-fill"></i> Lihat Profil</a>
                         </li>

@@ -135,7 +135,7 @@ public function store(Request $request)
 
         WhatsappHelper::send($noHp, $pesan);
 
-        return redirect()->route('order-list-diproses');
+        return redirect()->route('order-list-diproses')->with('success', 'Konfirmasi Order Selesai Berhasil');
     }
 
     public function listOrderMenungguPembayaran(Request $request)
