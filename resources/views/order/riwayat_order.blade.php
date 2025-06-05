@@ -11,17 +11,18 @@
             </div>
         </div>
 
-        <div class="row mt-4">
+        <div class="row my-4">
             <div class="col-md-4 scrolling-card">
                 @foreach ($transaksis as $transaksi)
                     <div class="card mb-3 shadow p-3 bg-body-tertiary order-card"
                         style="border-radius: 20px; cursor: pointer;" data-id="{{ $transaksi->id }}">
                         <div class="card-body">
-                            <h5 class="card-title font-weight-bold service-title">
-                                {{ $transaksi->Service->nama_service ?? 'Service Tidak Ditemukan' }}
-                            </h5>
-                            <p class="card-text text-muted my-2">Order :
-                                {{ \Carbon\Carbon::parse($transaksi->tanggal_order)->format('d F Y') }}</p>
+                            <h6 class="card-title font-weight-bold service-title">
+                                {{ $transaksi->Service->nama_service }}
+                            </h6>
+                            <p class="card-text text-muted mt-3 my-2">no Invoice : <b>{{ $transaksi->no_invoice }}</b></p>
+                            <p class="card-text text-muted my-2">Order
+                                :{{ \Carbon\Carbon::parse($transaksi->tanggal_order)->translatedFormat('d F Y') }}</p>
                             <span
                                 class="btn btn-outline-primary btn-sm rounded-pill float-end disabled">{{ $transaksi->status_transaksi }}</span>
                         </div>

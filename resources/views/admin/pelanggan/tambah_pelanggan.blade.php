@@ -14,14 +14,26 @@
                     <div class="row mb-3">
                         <label for="nama_service" class="col-sm-2 col-form-label">Nama Pelanggan</label>
                         <div class="col-sm-10">
-                            <input type="text" name="name" class="form-control">
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                required>
+                            @error('name')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
                     {{-- email --}}
                     <div class="row mb-3">
-                        <label for="inputPassword" class="col-sm-2 col-form-label">Alamat Email</label>
+                        <label for="inputEmail" class="col-sm-2 col-form-label">Alamat Email</label>
                         <div class="col-sm-10">
-                            <input type="email" name="email" class="form-control">
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                required>
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
                     {{-- tombol aksi --}}

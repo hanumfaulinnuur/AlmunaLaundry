@@ -4,10 +4,10 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center gap-4 mt-5">
+        <div class="row justify-content-center gap-2 mt-5">
             {{-- Sidebar Profile --}}
             <div class="col-md-3">
-                <div class="card text-center shadow p-3 mb-5 bg-body-tertiary rounded">
+                <div class="card text-center shadow p-3 mb-3 bg-body-tertiary rounded">
                     <div class="p-3">
                         <img class="img-fluid" src="{{ asset('assets/front_asset/image/avatar person.png') }}" alt="avatar"
                             width="100px">
@@ -79,20 +79,23 @@
                             <input type="hidden" id="longitude" name="longitude"
                                 value="{{ old('longitude', $user->pelanggan->longitude ?? '') }}">
 
-                            {{-- Peta --}}
+                            {{-- Peta dan Tombol Update Lokasi --}}
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label class="form-label fw-semibold field">Masukan Titik Lokasi</label>
                                 </div>
                                 <div class="col-md-8">
+                                    <button id="btn-locate" type="button" class="btn btn-sm btn-outline-danger mb-2">Lihat
+                                        Lokasi
+                                        Terkini</button>
                                     <div id="map" style="height: 400px; border: 1px solid #ccc;"></div>
                                 </div>
                             </div>
 
                             {{-- Tombol Submit --}}
-                            <div class="mt-4">
+                            <div class="mt-4 d-flex flex-column flex-sm-row">
                                 <a href="{{ route('profile.edit') }}"
-                                    class="btn btn-outline-warning fw-semibold px-4">Kembali</a>
+                                    class="btn btn-outline-warning fw-semibold px-4 mb-2 mb-sm-0 me-sm-2">Kembali</a>
                                 <button type="submit" class="btn btn-warning text-white fw-semibold px-4">Ubah
                                     Profil</button>
                             </div>
@@ -107,63 +110,92 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
-    {{-- Script Leaflet dengan Geolocation --}}
+    {{-- Script Leaflet dengan Tombol Update Lokasi --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Koordinat default dari server/database, atau fallback ke Jakarta jika kosong
-            var defaultLat = parseFloat("{{ old('latitude', $user->pelanggan->latitude ?? '-6.2') }}");
-            var defaultLng = parseFloat("{{ old('longitude', $user->pelanggan->longitude ?? '106.816666') }}");
+            var latitudeInput = document.getElementById('latitude');
+            var longitudeInput = document.getElementById('longitude');
 
-            var map = L.map('map').setView([defaultLat, defaultLng], 13);
+            // Ambil koordinat tersimpan dari server (string), parse ke float
+            var savedLat = latitudeInput.value ? parseFloat(latitudeInput.value) : null;
+            var savedLng = longitudeInput.value ? parseFloat(longitudeInput.value) : null;
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+            // Default fallback ke Jakarta
+            var defaultLat = -6.2;
+            var defaultLng = 106.816666;
 
-            var marker = L.marker([defaultLat, defaultLng], {
-                draggable: true
-            }).addTo(map);
-
+            // Fungsi untuk update nilai input
             function updateInput(latlng) {
-                document.getElementById('latitude').value = latlng.lat.toFixed(7);
-                document.getElementById('longitude').value = latlng.lng.toFixed(7);
+                latitudeInput.value = latlng.lat.toFixed(7);
+                longitudeInput.value = latlng.lng.toFixed(7);
             }
 
-            updateInput(marker.getLatLng());
+            // Fungsi untuk buat peta dan marker
+            function initMap(centerLat, centerLng) {
+                var map = L.map('map').setView([centerLat, centerLng], 13);
 
-            marker.on('dragend', function(e) {
-                updateInput(e.target.getLatLng());
-            });
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
 
-            map.on('click', function(e) {
-                marker.setLatLng(e.latlng);
-                updateInput(e.latlng);
-            });
+                var marker = L.marker([centerLat, centerLng], {
+                    draggable: true
+                }).addTo(map);
 
-            // Gunakan Geolocation API jika tersedia dan user mengizinkan
-            if (navigator.geolocation) {
+                updateInput(marker.getLatLng());
+
+                marker.on('dragend', function(e) {
+                    updateInput(e.target.getLatLng());
+                });
+
+                map.on('click', function(e) {
+                    marker.setLatLng(e.latlng);
+                    updateInput(e.latlng);
+                });
+
+                // Tombol untuk update lokasi device
+                document.getElementById('btn-locate').addEventListener('click', function() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            function(position) {
+                                var userLat = position.coords.latitude;
+                                var userLng = position.coords.longitude;
+
+                                // Update marker dan peta ke lokasi device
+                                marker.setLatLng([userLat, userLng]);
+                                map.setView([userLat, userLng], 13);
+                                updateInput(marker.getLatLng());
+                            },
+                            function(error) {
+                                alert('Gagal mendapatkan lokasi: ' + error.message);
+                            }
+                        );
+                    } else {
+                        alert('Geolocation tidak didukung di browser ini.');
+                    }
+                });
+
+                return map;
+            }
+
+            // Inisialisasi peta
+            if (savedLat !== null && savedLng !== null) {
+                // Pakai koordinat tersimpan
+                initMap(savedLat, savedLng);
+            } else if (navigator.geolocation) {
+                // Jika belum ada data koordinat, coba ambil lokasi device
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
-                        var userLat = position.coords.latitude;
-                        var userLng = position.coords.longitude;
-
-                        // Update peta ke lokasi device
-                        map.setView([userLat, userLng], 13);
-
-                        // Update posisi marker
-                        marker.setLatLng([userLat, userLng]);
-
-                        // Update nilai input
-                        updateInput(marker.getLatLng());
+                        initMap(position.coords.latitude, position.coords.longitude);
                     },
                     function(error) {
-                        console.warn('Geolocation error:', error.message);
-                        // Jika error, tetap pakai default
+                        // Kalau error, pakai default Jakarta
+                        initMap(defaultLat, defaultLng);
                     }
                 );
             } else {
-                console.warn('Geolocation not supported by this browser.');
-                // Jika tidak support geolocation, pakai default
+                // Kalau browser gak support geolocation, pakai default Jakarta
+                initMap(defaultLat, defaultLng);
             }
         });
     </script>

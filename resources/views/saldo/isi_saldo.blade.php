@@ -2,10 +2,10 @@
 @section('title', 'saldo')
 @section('content')
     <div class="container">
-        <div class="row justify-content-center gap-4 mt-5">
+        <div class="row justify-content-center gap-2 mt-5">
             {{-- Sidebar Kiri --}}
-            <div class="col-md-3">
-                <div class="card text-center shadow p-3 mb-5 bg-body-tertiary rounded">
+            <div class="col-12 col-md-3">
+                <div class="card text-center shadow p-3 mb-3 bg-body-tertiary rounded">
                     <div class="p-3">
                         <img class="img-fluid" src="{{ asset('assets/front_asset/image/avatar person.png') }}" alt="avatar"
                             width="100px">
@@ -21,7 +21,7 @@
             </div>
 
             {{-- Isi Saldo --}}
-            <div class="col-md-8">
+            <div class="col-12 col-md-8">
                 <div class="card shadow p-5 bg-body-tertiary rounded mb-5">
                     <h4 class="section-title-profile">Isi Saldo</h4>
                     <div class="row my-4 g-3">
@@ -85,13 +85,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header border-0">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="{{ asset('assets/front_asset/image/done.png') }}" alt="Icon Sukses" width="10%"
+                    <img src="{{ asset('assets/front_asset/image/done.png') }}" alt="Icon Sukses" width="15%"
                         class="mb-4">
-                    <h5 class="mb-4"><b>Pembelian Berhasil <br>
-                            Saldo berhasil Ditambahkan</b></h5>
+                    <h5><b>Pembelian Berhasil</b></h5>
+                    <p class="mb-4">Saldo Berhasil Ditambahkan <br>Refresh Halaman Untuk Melihat Update Saldo Mu !</p>
                 </div>
             </div>
         </div>
@@ -124,10 +123,11 @@
                         if (data.snap_token) {
                             snap.pay(data.snap_token, {
                                 onSuccess: function(result) {
-                                    // Menampilkan modal sukses
                                     $('#paymentSuccessModal').modal('show');
+                                    setTimeout(function() {
+                                        $('#paymentSuccessModal').modal('hide');
+                                    }, 2000);
 
-                                    // Update saldo dengan nominal topup
                                     fetch("{{ route('midtrans.updateSaldo') }}", {
                                             method: 'POST',
                                             headers: {
@@ -176,6 +176,7 @@
             });
         });
     </script>
+
 
 
 @endsection

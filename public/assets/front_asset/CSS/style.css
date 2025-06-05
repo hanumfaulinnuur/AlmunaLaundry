@@ -244,6 +244,16 @@ body {
     border-color: transparent !important;
 }
 
+/* modal saldo kurang */
+.btn-modal-saldo {
+    min-width: 150px;
+    padding: 0.375rem 1rem;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* page profile */
 .section-title-profile {
     font-weight: 700;
@@ -350,6 +360,10 @@ body {
 
 /* detail transakasi  */
 
+.card-detail-transaksi {
+    padding: 2.5rem !important;
+}
+
 .section-title-detail {
     font-weight: 700;
     color: #002f6c;
@@ -367,6 +381,38 @@ body {
     width: 100%;
     height: 3px;
     background-color: #f29142;
+}
+
+/* Untuk table header dan isi */
+/* table th,
+table td {
+    font-size: 14px;
+} */
+
+/* Media query untuk layar kecil (mobile) */
+@media (max-width: 768px) {
+    /* body,
+    table,
+    .card-title,
+    .btn,
+    p {
+        font-size: 14px;
+    }
+
+    table th,
+    table td {
+        font-size: 12px;
+    } */
+
+    .card-detail-transaksi {
+        padding: 0.5rem !important; /* padding lebih kecil */
+        margin-left: 0.5rem; /* opsional supaya card tidak menempel banget */
+        margin-right: 0.5rem; /* opsional supaya card tidak menempel banget */
+    }
+    .container-card-detail {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
 }
 
 /* halaman saldo deposit */
@@ -514,8 +560,7 @@ footer {
     }
 
     .section-title-profile {
-        font-size: 16px;
-        /* Ukuran font lebih kecil */
+        font-size: 20px;
         text-align: center;
         margin-bottom: 20px;
     }
