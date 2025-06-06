@@ -25,25 +25,24 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('/form-profile', [ProfileController::class, 'formEdit'])->name('profile.form.edit');
+    Route::get('/form-profile', [ProfileController::class, 'formEdit'])->name('profile.form');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Global Controller
-Route::get('/tentang-kami', [GlobalController::class, 'tentangKami'])->name('tentang-kami');
-Route::get('/lacak-status', [GlobalController::class, 'lacakStatus'])->name('lacak-status');
+Route::get('/tentang-kami', [GlobalController::class, 'tentangKami'])->name('global.tentang.kami');
+Route::get('/lacak-status', [GlobalController::class, 'lacakStatus'])->name('global.lacak.status');
 
-//Order Controller
-Route::get('/list-service', [OrderController::class, 'listLaynaan'])->name('list-service');
+
+Route::get('/list-service', [OrderController::class, 'listLaynaan'])->name('order.list');
 Route::post('/order/store', [OrderController::class, 'store'])
     ->name('order.store')
     ->middleware('auth');
 
-// Route untuk menampilkan riwayat
+
 Route::middleware('auth')->group(function () {
     Route::get('riwayat', [RiwayatOrderController::class, 'Riwayat'])->name('riwayat.order');
-    Route::get('/riwayat-order/detail/{id}', [RiwayatOrderController::class, 'detailStepper']);
+Route::get('/riwayat-order/detail/{id}', [RiwayatOrderController::class, 'detailStepper'])->name('riwayat.order.detail');
 });
 
 
@@ -62,10 +61,10 @@ Route::middleware('auth')->group(function () {
 //Order Controller Sub Validasi Pesanan
 Route::middleware('auth')->group(function () {
     Route::get('/order-list-validasi', [OrderController::class, 'listOrderValidasi'])->name('order-list-validasi');
-    Route::get('/order-validasi/{id}', [OrderController::class, 'validasiOrder'])->name('order-validasi');
+    Route::get('/order-validasi/{id}', [OrderController::class, 'validasiOrder'])->name('order.validasi');
     Route::put('/order-update/{id}', [OrderController::class, 'update'])->name('order.update');
     Route::get('/order-list-diproses', [OrderController::class, 'listOrderDiproses'])->name('order-list-diproses');
-    Route::put('/order-konfirmasi/{id}', [OrderController::class, 'konfirmasiProsesSelesai'])->name('order.proses.konfirmasi');
+    Route::put('/order-konfirmasi/{id}', [OrderController::class, 'konfirmasiProsesSelesai'])->name('order-proses-konfirmasi');
     Route::get('/order-list-pembayaran', [OrderController::class, 'listOrderMenungguPembayaran'])->name('order-list-pembayaran');
 });
 
@@ -92,9 +91,10 @@ Route::middleware('auth')->group(function () {
 });
 
 // Beranda Admin Controller
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/beranda', [BerandaController::class, 'index'])->name('admin.beranda');
 });
+
 
 // Service Controller
 Route::middleware('auth')->prefix('admin')

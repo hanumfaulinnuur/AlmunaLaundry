@@ -63,7 +63,7 @@
                         <div class="d-flex justify-content-center gap-3">
                             <button type="button" class="btn btn-outline-warning btn-modal"
                                 data-bs-dismiss="modal">Kembali</button>
-                            <a href="{{ route('profile.form.edit') }}" class="btn btn-order btn-modal">Isi Data</a>
+                            <a href="{{ route('profile.form') }}" class="btn btn-order btn-modal">Isi Data</a>
                         </div>
                     </div>
                 </div>

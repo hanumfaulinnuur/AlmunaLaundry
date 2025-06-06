@@ -51,7 +51,8 @@
 
                 // Muat konten stepper dari server
                 $.ajax({
-                    url: '/riwayat-order/detail/' + orderId,
+                    url: '/riwayat-order/detail/' +
+                        orderId, // Menggunakan concatenation untuk menyisipkan orderId
                     method: 'GET',
                     success: function(response) {
                         $('#order-stepper').html(response);

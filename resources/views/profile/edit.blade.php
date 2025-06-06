@@ -49,7 +49,7 @@
                             </tbody>
                         </table>
 
-                        <a href="{{ route('profile.form.edit') }}" class="btn btn-warning text-white fw-semibold px-4">Ubah
+                        <a href="{{ route('profile.form') }}" class="btn btn-warning text-white fw-semibold px-4">Ubah
                             Profil</a>
                     </div>
                 </div>

@@ -85,7 +85,7 @@
                                                     <div class="d-flex justify-content-center mt-4 gap-3">
                                                         <button type="button" class="btn btn-outline-primary px-4"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('order.proses.konfirmasi', $item->id) }}"
+                                                        <form action="{{ route('order-proses-konfirmasi', $item->id) }}"
                                                             method="POST" class="d-inline">
                                                             @csrf
                                                             @method('PUT')
