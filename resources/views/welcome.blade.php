@@ -8,7 +8,7 @@
                     <h1 class="herro-tagline">Laundry Cepat, Bersih, dan Rapi dalam Satu Sentuhan!</h1>
                     <h2 class="sub-herro-tagline">"Layanan Laundry Terpercaya yang Siap Membantu Menghemat Waktu Anda."
                     </h2>
-                    <a href="{{ route('list-service') }}" class="button-secoundary">Coba Sekarang !</a>
+                    <a href="{{ route('order.list') }}" class="button-secoundary">Coba Sekarang !</a>
                 </div>
                 <div class="col-md-6 my-auto">
                     <img class="img-fluid" src="{{ asset('assets/front_asset/image/herro.png') }}" alt="">

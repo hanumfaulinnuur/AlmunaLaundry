@@ -4,7 +4,7 @@
       <ul class="sidebar-nav" id="sidebar-nav">
 
           <li class="nav-item">
-              <a class="nav-link " href="{{ url('/admin/beranda') }}">
+              <a class="nav-link" href="{{ url('/admin/beranda') }}">
                   <i class="bi bi-house-door-fill"></i> <span>Beranda</span>
               </a>
           </li>
@@ -57,14 +57,5 @@
                   </li>
               </ul>
           </li>
-
-          {{-- <!-- sub menu deposit -->
-          <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                  <i class="bi bi-wallet2"></i><span>Deposit</span><i class="bi bi-chevron-down ms-auto"></i>
-              </a>
-              <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-              </ul>
-          </li> --}}
       </ul>
   </aside>

@@ -11,13 +11,13 @@
                     <a class="nav-link" href="{{ route('dashboard') }}">Beranda</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link" href="{{ route('list-service') }}">Order Layanan</a>
+                    <a class="nav-link" href="{{ route('order.list') }}">Order Layanan</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link" href="{{ route('lacak-status') }}">Lacak Status</a>
+                    <a class="nav-link" href="{{ route('global.lacak.status') }}">Lacak Status</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link" href="{{ route('tentang-kami') }}">Tentang Kami</a>
+                    <a class="nav-link" href="{{ route('global.tentang.kami') }}">Tentang Kami</a>
                 </li>
             </ul>
             @auth
