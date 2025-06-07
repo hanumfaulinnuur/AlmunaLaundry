@@ -5,6 +5,7 @@ Pesanan Anda dengan detail :
 
 No Invoice : *{{ $invoice }}*
 Nama Service : {{ $service }}
+Tanggal Order : {{ $tanggal_order }}
 Total Berat : {{ $total_berat }} Kg/Item
 Total Harga : Rp. {{ $total_harga }}
 

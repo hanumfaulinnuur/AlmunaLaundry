@@ -79,7 +79,6 @@
                     </table>
                 </div>
 
-                {{-- Pagination --}}
                 <div class="d-flex justify-content-end my-4">
                     {{ $listOrderSelesai->links() }}
                 </div>

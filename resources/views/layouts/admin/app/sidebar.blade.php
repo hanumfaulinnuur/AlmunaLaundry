@@ -4,7 +4,7 @@
       <ul class="sidebar-nav" id="sidebar-nav">
 
           <li class="nav-item">
-              <a class="nav-link" href="{{ url('/admin/beranda') }}">
+              <a class="nav-link" href="{{ route('admin.beranda') }}">
                   <i class="bi bi-house-door-fill"></i> <span>Beranda</span>
               </a>
           </li>

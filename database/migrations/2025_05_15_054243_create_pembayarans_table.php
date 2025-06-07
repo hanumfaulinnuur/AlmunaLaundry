@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->timestamp('tanggal_pembayaran')->nullable();
             $table->enum('jenis_pembayaran', ['cash', 'saldo', 'midtrans']);
             $table->enum('status_pembayaran', ['pending', 'berhasil', 'gagal'])->default('pending');
+            $table->integer('biaya_admin')->default(0);
             $table->timestamps();
 
             $table->foreign('id_transaksi')->references('id')->on('transaksis')->onDelete('cascade');

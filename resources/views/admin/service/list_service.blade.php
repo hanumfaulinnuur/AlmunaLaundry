@@ -45,7 +45,7 @@
                                             </button>
                                         </div>
 
-                                        <!-- Modal tetap di luar div d-flex -->
+                                        <!-- Modal konfirmasi hapus -->
                                         <div class="modal fade" id="modalHapus{{ $item->id }}" tabindex="-1"
                                             aria-labelledby="modalHapusLabel{{ $item->id }}" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
