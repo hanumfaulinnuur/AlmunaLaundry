@@ -79,10 +79,9 @@
                                             <!-- Tombol buka modal -->
                                             <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#modalValidasi{{ $item->id }}">
-                                                Validasi Pembayaran
+                                                Validasi
                                             </button>
 
-                                            <!-- Modal -->
                                             <!-- Modal Validasi Pembayaran -->
                                             <div class="modal fade" id="modalValidasi{{ $item->id }}" tabindex="-1"
                                                 aria-labelledby="modalValidasiLabel{{ $item->id }}" aria-hidden="true">

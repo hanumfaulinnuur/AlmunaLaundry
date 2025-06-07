@@ -3,8 +3,6 @@
 @section('content')
     <main id="main" class="main">
         <div class="container my-4">
-
-            {{-- Statistik Total Pelanggan --}}
             <div class="row g-4 mb-4">
                 <div class="col-md-4">
                     <div class="card">
@@ -37,14 +35,11 @@
             </div>
 
 
-
-            {{-- Grafik Order Per Hari --}}
             <div class="row">
                 <div class="col">
                     <div class="card p-4">
                         <h5 class="text-center"><b>Grafik Order Masuk dan Selesai per Hari</b></h5>
                         <hr>
-                        {{-- Filter Tanggal --}}
                         <div class="row mt-3 mb-4">
                             <div class="d-flex justify-content-end mb-4">
                                 <form method="GET" action="{{ route('admin.beranda') }}"
@@ -77,7 +72,6 @@
         </div>
     </main>
 
-    {{-- Script Chart.js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('orderChart').getContext('2d');

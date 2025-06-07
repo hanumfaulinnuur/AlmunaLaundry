@@ -78,17 +78,14 @@ class SaldoController extends Controller
 
 public function updateSaldo(Request $request)
 {
-    // Ambil user yang sedang login
     $user = Auth::user();
 
-    // Cari data pelanggan berdasarkan user id
     $pelanggan = Pelanggan::where('id_user', $user->id)->first();
 
     if (!$pelanggan) {
         return response()->json(['error' => 'Data pelanggan tidak ditemukan'], 404);
     }
 
-    // Validasi input amount, harus angka positif bulat
     $amount = $request->input('amount');
     if (!is_numeric($amount) || (int) $amount <= 0) {
         return response()->json(['error' => 'Nominal tidak valid'], 400);
@@ -98,11 +95,9 @@ public function updateSaldo(Request $request)
     DB::beginTransaction();
 
     try {
-        // Tambah saldo deposit pelanggan
         $pelanggan->deposit_saldo += $amount;
         $pelanggan->save();
 
-        // Catat riwayat transaksi saldo (kredit)
         SaldoHistori::create([
             'id_pelanggan' => $pelanggan->id,
             'nominal' => $amount,

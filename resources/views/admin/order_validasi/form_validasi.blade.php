@@ -74,16 +74,11 @@
         </div>
     </main>
 
-    {{-- Script untuk hitung total harga otomatis --}}
-    @php
-        $hargaPerKg = $validasi->Service->harga ?? 0;
-    @endphp
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const beratInput = document.getElementById('total_berat');
             const totalHargaInput = document.getElementById('total_harga');
-            const hargaPerKg = {{ $hargaPerKg }};
+            const hargaPerKg = {{ $validasi->Service->harga ?? 0 }};
 
             function hitungTotal() {
                 const berat = parseFloat(beratInput.value) || 0;
@@ -92,7 +87,7 @@
             }
 
             beratInput.addEventListener('input', hitungTotal);
-            hitungTotal(); // Hitung saat pertama kali load
+            hitungTotal();
         });
     </script>
 @endsection

@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-center align-items-center">
                     <div class="form-login w-100">
-                        <h1 class="text-center header-font-style">Lupa Password mu ?</h1>
+                        <h1 class="text-center header-font-style">Lupa Kata Sandi mu ?</h1>
                         <h3 class="text-center sub-header-font-style my-4">
                             Cukup masukan alamat email Anda dan kami akan mengirimkan tautan reset kata sandi ke email
                             Anda!

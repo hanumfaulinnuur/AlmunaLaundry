@@ -61,7 +61,7 @@
                                     <td>{{ \Carbon\Carbon::parse($item->tanggal_order)->translatedFormat('l, d F Y') }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('order-validasi', $item->id) }}"
+                                        <a href="{{ route('order.validasi', $item->id) }}"
                                             class="btn btn-success">Validasi</a>
                                     </td>
                                 </tr>
@@ -73,6 +73,7 @@
                         </tbody>
                     </table>
                 </div>
+
                 <div class="d-flex justify-content-end my-4">
                     {{ $listOrderValidasi->links() }}
                 </div>

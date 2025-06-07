@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -46,6 +47,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    const ROLE_ADMIN = 'admin';
+    const ROLE_PELANGGAN = 'pelanggan';
+
+    public function isAdmin() {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isPelanggan() {
+        return $this->role === self::ROLE_PELANGGAN;
     }
 
     public function Pelanggan(): HasOne

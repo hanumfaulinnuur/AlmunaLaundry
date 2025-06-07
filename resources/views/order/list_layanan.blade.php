@@ -115,9 +115,6 @@
                 if (konfirmasiModal) {
                     konfirmasiModal.hide();
                 }
-
-                // Jangan tampilkan modal order processed di sini, 
-                // modal akan tampil berdasarkan session flash setelah reload halaman
             }
         });
 

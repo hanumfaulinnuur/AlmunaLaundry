@@ -20,65 +20,62 @@ class OrderController extends Controller
         return view('order.list_layanan', compact('listLayanan'));
     }
 
-public function store(Request $request)
-{
-    // Validasi input
-    $request->validate([
-        'id_service' => 'required|exists:services,id',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_service' => 'required|exists:services,id',
+        ]);
 
-    // Ambil user yang sedang login
-    $user = auth()->user();
+        $user = auth()->user();
 
-    // Ambil data pelanggan berdasarkan user login
-    $pelanggan = Pelanggan::where('id_user', $user->id)->first();
+        // Ambil data pelanggan berdasarkan user login
+        $pelanggan = Pelanggan::where('id_user', $user->id)->first();
 
-    // Kalau data pelanggan tidak ditemukan
-    if (!$pelanggan) {
-        return redirect()->back()->with('error', 'Data pelanggan tidak ditemukan!');
+        // Kalau data pelanggan tidak ditemukan
+        if (!$pelanggan) {
+            return redirect()->back()->with('error', 'Data pelanggan tidak ditemukan!');
+        }
+
+        // Cek nomor telepon
+        if (!$pelanggan->no_telepon || trim($pelanggan->no_telepon) == '') {
+            // Kalau no telepon kosong, redirect ke halaman layanan dengan flag modal muncul
+            return redirect()->route('order.list')->with('phone_missing', true);
+        }
+
+        // Ambil data layanan
+        $service = Service::findOrFail($request->id_service);
+
+        $transaksi = new Transaksi();
+        $transaksi->id_pelanggan = $pelanggan->id;
+        $transaksi->id_service = $service->id;
+        $transaksi->no_invoice = 'INV-' . strtoupper(Str::random(10));
+        $transaksi->tanggal_order = Carbon::now();
+        $transaksi->total_berat = null;
+        $transaksi->total_harga = null;
+        $transaksi->status_transaksi = 'proses validasi';
+        $transaksi->save();
+
+        return redirect()->route('order.list')->with('success', 'Order berhasil dibuat!');
     }
-
-    // Cek nomor telepon
-    if (!$pelanggan->no_telepon || trim($pelanggan->no_telepon) == '') {
-        // Kalau no telepon kosong, redirect ke halaman layanan dengan flag modal muncul
-        return redirect()->route('list-service')->with('phone_missing', true);
-    }
-
-    // Ambil data layanan
-    $service = Service::findOrFail($request->id_service);
-
-    $transaksi = new Transaksi();
-    $transaksi->id_pelanggan = $pelanggan->id;
-    $transaksi->id_service = $service->id;
-    $transaksi->no_invoice = 'INV-' . strtoupper(Str::random(10));
-    $transaksi->tanggal_order = Carbon::now();
-    $transaksi->total_berat = null;
-    $transaksi->total_harga = null;
-    $transaksi->status_transaksi = 'proses validasi';
-    $transaksi->save();
-
-    return redirect()->route('list-service')->with('success', 'Order berhasil dibuat!');
-}
-
 
     // Admin
 
     public function listOrderValidasi(Request $request)
-{
-    $search = $request->input('search');
+    {
+        $search = $request->input('search');
 
-    $listOrderValidasi = Transaksi::with(['Pelanggan.user', 'Service'])
-        ->where('status_transaksi', 'proses validasi')
-        ->when($search, function ($query, $search) {
-            $query->whereHas('Pelanggan.user', function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
-            });
-        })
-        ->paginate(10)
-        ->withQueryString();
+        $listOrderValidasi = Transaksi::with(['Pelanggan.user', 'Service'])
+            ->where('status_transaksi', 'proses validasi')
+            ->when($search, function ($query, $search) {
+                $query->whereHas('Pelanggan.user', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            })
+            ->paginate(10)
+            ->withQueryString();
 
-    return view('admin.order_validasi.list_order_masuk', compact('listOrderValidasi'));
-}
+        return view('admin.order_validasi.list_order_masuk', compact('listOrderValidasi'));
+    }
 
     public function validasiOrder(string $id)
     {
@@ -108,7 +105,7 @@ public function store(Request $request)
         $listOrderProses = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'sedang di proses')
             ->when($search, function ($query, $search) {
-                $query->whereHas('Pelanggan.user', function ($q) use ($search){
+                $query->whereHas('Pelanggan.user', function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%");
                 });
             })
@@ -129,9 +126,10 @@ public function store(Request $request)
         $nama = $transaksi->Pelanggan->user->name ?? 'Pelanggan';
         $invoice = $transaksi->no_invoice;
         $service = $transaksi->service->nama_service;
+        $tanggal_order = \Carbon\Carbon::parse($transaksi->tanggal_order)->locale('id')->isoFormat('dddd, D MMMM YYYY');
         $total_berat = $transaksi->total_berat;
         $total_harga = $transaksi->total_harga ? number_format($transaksi->total_harga, 0, ',', '.') : '-';
-        $pesan = View::make('order.notifikasi_wa', compact('nama', 'invoice', 'service', 'total_berat', 'total_harga'))->render();
+        $pesan = View::make('order.notifikasi_wa', compact('nama', 'invoice', 'service', 'tanggal_order', 'total_berat', 'total_harga'))->render();
 
         WhatsappHelper::send($noHp, $pesan);
 
@@ -144,10 +142,10 @@ public function store(Request $request)
         $listOrderPembayaran = Transaksi::with(['Pelanggan.user', 'Service'])
             ->where('status_transaksi', 'menunggu pembayaran')
             ->when($search, function ($query, $search) {
-                $query->whereHas('Pelanggan.user', function ($q) use ($search){
+                $query->whereHas('Pelanggan.user', function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%");
                 });
-                })
+            })
             ->paginate(10)
             ->withQueryString();
 

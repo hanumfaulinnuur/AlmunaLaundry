@@ -26,8 +26,8 @@
                 </div>
                 <div class="col-md-6 d-flex justify-content-center align-items-center">
                     <div class="form-login w-100">
-                        <h1 class="text-center header-font-style">Konfirmasi Passowrd</h1>
-                        <h3 class="text-center sub-header-font-style">Masukan Password Baru Mu !</h3>
+                        <h1 class="text-center header-font-style">Konfirmasi Kata Sandi</h1>
+                        <h3 class="text-center sub-header-font-style">Masukan Kata Sandi Baru Mu !</h3>
                         <form method="POST" action="{{ route('password.store') }}">
                             @csrf
                             <input type="hidden" name="token" value="{{ $request->route('token') }}">
