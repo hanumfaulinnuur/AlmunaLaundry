@@ -7,7 +7,7 @@ class WhatsappHelper
 {
     public static function send($to, $message)
     {
-        $token = env('FONNTE_TOKEN');
+        $token = env('FONNTE');
 
         $response = Http::withHeaders([
             'Authorization' => $token,

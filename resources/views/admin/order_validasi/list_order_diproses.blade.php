@@ -67,7 +67,6 @@
                                     Kg</td>
                                 <td>RP. {{ $item->total_harga }}</td>
                                 <td>
-                                    <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#modalKonfirmasi{{ $item->id }}">
                                         Konfirmasi

@@ -60,10 +60,10 @@ Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('/order-validasi/{id}', [OrderController::class, 'validasiOrder'])->name('order.validasi');
     Route::put('/order-update/{id}', [OrderController::class, 'update'])->name('order.update');
     Route::get('/order-list-diproses', [OrderController::class, 'listOrderDiproses'])->name('order-list-diproses'); //jelek
+    Route::put('/order-konfirmasi/{id}', [OrderController::class, 'konfirmasiProsesSelesai'])->name('order-proses-konfirmasi'); //jelek
     Route::get('/order-list-pembayaran', [OrderController::class, 'listOrderMenungguPembayaran'])->name('order-list-pembayaran'); //jelek
 });
 
-Route::put('/order-konfirmasi/{id}', [OrderController::class, 'konfirmasiProsesSelesai'])->name('order-proses-konfirmasi'); //jelek
 
 Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('/invoice/{id}/download', [EksporController::class, 'eksporInvoicePDF'])->name('invoice.download');
