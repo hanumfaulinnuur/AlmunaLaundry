@@ -16,7 +16,7 @@
 
                     <div>
                         <form method="GET" action="{{ route('rekap-order-selesai') }}"
-                            class="d-flex flex-wrap gap-2 align-items-end mb-2">
+                            class="d-flex flex-wrap gap-2 align-items-end">
                             <div class="d-flex flex-column">
                                 <label for="start_date" class="form-label mb-1 small">Tanggal Awal</label>
                                 <input type="date" id="start_date" name="start_date" class="form-control form-control-sm"
@@ -31,8 +31,9 @@
                                 <button type="submit" class="btn btn-sm btn-primary mt-3">Filter</button>
                             </div>
                         </form>
+                        <small class="text-danger text-right">* filter berdasarkan tanggal order selesai</small>
 
-                        <form action="{{ route('rekap-order-selesai') }}" method="GET" class="d-flex gap-2"
+                        <form action="{{ route('rekap-order-selesai') }}" method="GET" class="d-flex gap-2 mt-3"
                             role="search">
                             <input type="text" name="search" class="form-control form-control-sm"
                                 placeholder="Cari Nama Pelanggan..." value="{{ request('search') }}">

@@ -65,7 +65,7 @@
                                 </td>
                                 <td>{{ rtrim(rtrim(number_format($item->total_berat, 2, '.', ''), '0'), '.') }}
                                     Kg</td>
-                                <td>RP. {{ $item->total_harga }}</td>
+                                <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#modalKonfirmasi{{ $item->id }}">

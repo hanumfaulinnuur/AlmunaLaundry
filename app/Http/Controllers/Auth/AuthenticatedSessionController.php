@@ -33,9 +33,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Cek role user
+        $user = Auth::user();
 
-        $role = Auth::user()->role;
+        if (is_null($user->email_verified_at)) {
+            $user->email_verified_at = now();
+            $user->save();
+        }
+
+        $role = $user->role;
 
         if ($role === 'admin') {
             return redirect()->route('admin.beranda');
@@ -44,8 +49,6 @@ class AuthenticatedSessionController extends Controller
         } else {
             return redirect()->route('login');
         }
-
-        return redirect('/');
     }
 
     /**

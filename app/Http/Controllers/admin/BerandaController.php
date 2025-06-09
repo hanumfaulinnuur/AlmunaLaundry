@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Service;
-use Carbon\Carbon;
+use App\Models\Transaksi;
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Transaksi;
 
 class BerandaController extends Controller
 {
@@ -33,7 +34,7 @@ public function index(Request $request)
         );
 
         $orderSelesai->push(
-            Transaksi::whereDate('tanggal_selesai', $tanggal)->whereNotNull('tanggal_selesai')->count()
+            Pembayaran::whereDate('tanggal_pembayaran', $tanggal)->count()
         );
 
         $current->addDay();
