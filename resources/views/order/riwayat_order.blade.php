@@ -13,21 +13,26 @@
 
         <div class="row my-4">
             <div class="col-md-4 scrolling-card">
-                @foreach ($transaksis as $transaksi)
-                    <div class="card mb-3 shadow p-3 bg-body-tertiary order-card"
-                        style="border-radius: 20px; cursor: pointer;" data-id="{{ $transaksi->id }}">
-                        <div class="card-body">
-                            <h6 class="card-title font-weight-bold service-title">
-                                {{ $transaksi->Service->nama_service }}
-                            </h6>
-                            <p class="card-text text-muted mt-3 my-2">no Invoice : <b>{{ $transaksi->no_invoice }}</b></p>
-                            <p class="card-text text-muted my-2">Order
-                                :{{ \Carbon\Carbon::parse($transaksi->tanggal_order)->translatedFormat('d F Y') }}</p>
-                            <span
-                                class="btn btn-outline-primary btn-sm rounded-pill float-end disabled">{{ $transaksi->status_transaksi }}</span>
+                @if ($transaksis->isEmpty())
+                    <p class="text-muted">Belum ada riwayat transaksi.</p>
+                @else
+                    @foreach ($transaksis as $transaksi)
+                        <div class="card mb-3 shadow p-3 bg-body-tertiary order-card"
+                            style="border-radius: 20px; cursor: pointer;" data-id="{{ $transaksi->id }}">
+                            <div class="card-body">
+                                <h6 class="card-title font-weight-bold service-title">
+                                    {{ $transaksi->Service->nama_service }}
+                                </h6>
+                                <p class="card-text text-muted mt-3 my-2">no Invoice : <b>{{ $transaksi->no_invoice }}</b>
+                                </p>
+                                <p class="card-text text-muted my-2">Order
+                                    :{{ \Carbon\Carbon::parse($transaksi->tanggal_order)->translatedFormat('d F Y') }}</p>
+                                <span
+                                    class="btn btn-outline-primary btn-sm rounded-pill float-end disabled">{{ $transaksi->status_transaksi }}</span>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
 
             <div class="col-md-8">

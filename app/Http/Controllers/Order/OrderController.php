@@ -46,7 +46,7 @@ class OrderController extends Controller
         $transaksi->status_transaksi = 'proses validasi';
         $transaksi->save();
 
-        return redirect()->route('order.list');
+        return redirect()->route('order.list')->with('success', 'Order berhasil dibuat!');
     }
 
     // Admin
@@ -84,6 +84,7 @@ class OrderController extends Controller
 
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->update($validated);
+        $transaksi->proses_order = now();
         $transaksi->status_transaksi = 'sedang diproses';
         $transaksi->save();
 

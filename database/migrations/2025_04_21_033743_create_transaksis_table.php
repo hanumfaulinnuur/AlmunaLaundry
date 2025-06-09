@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_service');
             $table->string('no_invoice', 20)->unique();
             $table->datetime('tanggal_order');
+            $table->datetime('proses_order')->nullable();
             $table->datetime('tanggal_selesai')->nullable();
             $table->decimal('total_berat', 8, 2)->nullable();
             $table->unsignedInteger('total_harga')->nullable();

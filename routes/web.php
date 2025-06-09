@@ -65,7 +65,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 });
 
 
-Route::middleware('auth', 'role:admin')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/invoice/{id}/download', [EksporController::class, 'eksporInvoicePDF'])->name('invoice.download');
     Route::get('/export-excel', [EksporController::class, 'exportRekapOrderExcel'])->name('ekspor.excel');
 });
