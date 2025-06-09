@@ -23,7 +23,7 @@
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title text-center"><b>{{ $service->nama_service }}</b></h5>
                             <p class="card-text">{{ $service->deskripsi }}</p>
-                            <p class="card-text">Rp. {{ $service->harga }}</p>
+                            <p class="card-text">Rp. {{ number_format($service->harga ?? 0, 0, ',', '.') }}</p>
                             <a href="#" class="btn btn-order mt-auto" data-id="{{ $service->id }}"
                                 data-bs-toggle="modal" data-bs-target="#konfirmasiModal">
                                 Order Sekarang
@@ -80,7 +80,7 @@
                     </div>
                     <div class="modal-body p-5">
                         <img src="{{ asset('assets/front_asset/image/admin.png') }}" alt="Order Process" width="20%">
-                        <h5 class="mt-4">Order Kamu Sedang Diproses, Silahkan Konfirmasi Admin</h5>
+                        <h5 class="mt-4">Order Kamu Akan di Validasi <br> Cek Secara Berkala Pada Menu Riwayat Order</h5>
                     </div>
                 </div>
             </div>

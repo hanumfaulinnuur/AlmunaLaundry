@@ -28,21 +28,12 @@ class OrderController extends Controller
 
         $user = auth()->user();
 
-        // Ambil data pelanggan berdasarkan user login
         $pelanggan = Pelanggan::where('id_user', $user->id)->first();
 
-        // Kalau data pelanggan tidak ditemukan
-        if (!$pelanggan) {
-            return redirect()->back()->with('error', 'Data pelanggan tidak ditemukan!');
-        }
-
-        // Cek nomor telepon
         if (!$pelanggan->no_telepon || trim($pelanggan->no_telepon) == '') {
-            // Kalau no telepon kosong, redirect ke halaman layanan dengan flag modal muncul
             return redirect()->route('order.list')->with('phone_missing', true);
         }
 
-        // Ambil data layanan
         $service = Service::findOrFail($request->id_service);
 
         $transaksi = new Transaksi();
@@ -55,7 +46,7 @@ class OrderController extends Controller
         $transaksi->status_transaksi = 'proses validasi';
         $transaksi->save();
 
-        return redirect()->route('order.list')->with('success', 'Order berhasil dibuat!');
+        return redirect()->route('order.list');
     }
 
     // Admin
@@ -85,7 +76,7 @@ class OrderController extends Controller
 
     public function update(Request $request, string $id)
     {
-        // Validasi input
+
         $validated = $request->validate([
             'total_berat' => 'required|numeric',
             'total_harga' => 'required|numeric',
@@ -93,7 +84,7 @@ class OrderController extends Controller
 
         $transaksi = Transaksi::findOrFail($id);
         $transaksi->update($validated);
-        $transaksi->status_transaksi = 'sedang di proses';
+        $transaksi->status_transaksi = 'sedang diproses';
         $transaksi->save();
 
         return redirect()->route('order-list-validasi')->with('success', 'Order Berhasil Di validasi');
@@ -103,7 +94,7 @@ class OrderController extends Controller
     {
         $search = $request->input('search');
         $listOrderProses = Transaksi::with(['Pelanggan.user', 'Service'])
-            ->where('status_transaksi', 'sedang di proses')
+            ->where('status_transaksi', 'sedang diproses')
             ->when($search, function ($query, $search) {
                 $query->whereHas('Pelanggan.user', function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%");
@@ -126,9 +117,9 @@ class OrderController extends Controller
         $nama = $transaksi->Pelanggan->user->name ?? 'Pelanggan';
         $invoice = $transaksi->no_invoice;
         $service = $transaksi->service->nama_service;
-        $tanggal_order = \Carbon\Carbon::parse($transaksi->tanggal_order)->locale('id')->isoFormat('dddd, D MMMM YYYY');
+        $tanggal_order = $transaksi->tanggal_order;
         $total_berat = $transaksi->total_berat;
-        $total_harga = $transaksi->total_harga ? number_format($transaksi->total_harga, 0, ',', '.') : '-';
+        $total_harga = $transaksi->total_harga;
         $pesan = View::make('order.notifikasi_wa', compact('nama', 'invoice', 'service', 'tanggal_order', 'total_berat', 'total_harga'))->render();
 
         WhatsappHelper::send($noHp, $pesan);

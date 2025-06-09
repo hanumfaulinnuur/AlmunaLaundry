@@ -89,7 +89,7 @@
             <p>Silakan klik tombol di bawah ini untuk masuk ke halaman login dan <b>segera lakukan perubahan password
                     akun anda :</b></p>
 
-            <a href="https://instagram.com" class="btn">Login Sekarang</a>
+            <a href="http://127.0.0.1:8000/login" class="btn">Login Sekarang</a>
         </div>
 
         <div class="footer">

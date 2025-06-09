@@ -3,8 +3,8 @@
 @section('content')
     <main id="main" class="main">
         <div class="container my-4">
-            <div class="row g-4 mb-4">
-                <div class="col-md-4">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-4">
                     <div class="card">
                         <div class="d-flex align-items-center p-3 ">
                             <div class="bg-primary text-white p-3 rounded-4 me-3 d-flex align-items-center justify-content-center"
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-12 col-sm-6 col-md-4">
                     <div class="card">
                         <div class="d-flex align-items-center p-3 ">
                             <div class="bg-primary text-white p-3 rounded-4 me-3 d-flex align-items-center justify-content-center"
@@ -41,7 +41,7 @@
                         <h5 class="text-center"><b>Grafik Order Masuk dan Selesai per Hari</b></h5>
                         <hr>
                         <div class="row mt-3 mb-4">
-                            <div class="d-flex justify-content-end mb-4">
+                            <div class="d-flex justify-content-end">
                                 <form method="GET" action="{{ route('admin.beranda') }}"
                                     class="d-flex flex-wrap gap-2 align-items-end">
                                     <div class="d-flex flex-column">
@@ -61,7 +61,6 @@
                                     </div>
                                 </form>
                             </div>
-
                         </div>
 
                         <canvas id="orderChart"></canvas>
@@ -111,4 +110,5 @@
             }
         });
     </script>
+
 @endsection

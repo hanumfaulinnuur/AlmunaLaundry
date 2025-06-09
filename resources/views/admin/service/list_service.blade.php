@@ -32,7 +32,7 @@
                                     <th scope="row" class="text-center">{{ $service->firstItem() + $key }}</th>
                                     <td>{{ $item->nama_service }}</td>
                                     <td class="td-deskripsi">{{ $item->deskripsi }}</td>
-                                    <td>Rp. {{ $item->harga }}</td>
+                                    <td>Rp. {{ number_format($item->harga, 0, ',', '.') }}</td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
                                             <a class="btn btn-primary" href="{{ route('admin.services.edit', $item->id) }}">

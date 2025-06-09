@@ -24,7 +24,7 @@
                     </tbody>
                 </table>
             </div>
-            <small class="text-danger mt-3">* Biaya admin sebesar Rp 3.000 akan dikenakan untuk pembayaran via
+            <small class="text-danger mt-3">* Biaya admin sebesar Rp. 3.000 akan dikenakan untuk pembayaran via
                 Midtrans.</small>
 
             <div class="text-end mt-4">

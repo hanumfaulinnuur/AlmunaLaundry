@@ -3,8 +3,7 @@
 namespace Database\Seeders\admin;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class AdminSeeder extends Seeder
 {
@@ -13,14 +12,13 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
+        User::create([
             'name' => 'Admin Almuna',
             'email' => 'almunaadmin@gmail.com',
-            'password' => Hash::make('admin1234'),
+            'password' => bcrypt('admin1234'),
             'role' => 'admin',
             'email_verified_at' => now(),
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
     }
 }
+
