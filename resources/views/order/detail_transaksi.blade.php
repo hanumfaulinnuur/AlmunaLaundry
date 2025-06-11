@@ -39,10 +39,8 @@
                                 data-bs-target="#cashPaymentModal">Pembayaran Cash</a>
                         </li>
                         <li>
-                            <form action="{{ route('pembayaran.saldo', $transaksi->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item p-2">Pembayaran Saldo</button>
-                            </form>
+                            <a href="#" class="dropdown-item p-2" data-bs-toggle="modal"
+                                data-bs-target="#saldoConfirmationModal">Pembayaran Saldo</a>
                         </li>
                         <li><button class="dropdown-item p-2" id="pay-button">Pembayaran Midtrans</button></li>
                     </ul>
@@ -63,6 +61,26 @@
                         @csrf
                         <button type="submit" class="btn btn-primary">Lakukan Pembayaran</button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- modal konfirmasi pembayaran saldo --}}
+    <div class="modal fade" id="saldoConfirmationModal" tabindex="-1" aria-labelledby="saldoConfirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+                <div class="modal-body p-5">
+                    <h5 class="mb-4">Apakah kamu akan <br> Melakukan Pembayaran dengan Saldo?</h5>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-outline-warning btn-modal"
+                            data-bs-dismiss="modal">Batal</button>
+                        <form action="{{ route('pembayaran.saldo', $transaksi->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-order btn-modal">Bayar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

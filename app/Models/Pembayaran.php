@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Pembayaran extends Model
 {
-    protected $fillable = ['id_transaksi', 'tanggal_pembayaran', 'jenis_pembayaran', 'status_pembayaran'];
+    protected $fillable = ['id_transaksi', 'tanggal_pembayaran', 'jenis_pembayaran', 'status_pembayaran', 'biaya_admin'];
 
     public function Transaksi(): BelongsTo
     {

@@ -63,7 +63,7 @@
                 <a href="{{ route('riwayat.order') }}" class="text-primary text-decoration-none fw-semibold">Kembali Ke
                     Riwayat</a>
                 <a href="{{ route('invoice.download', $transaksi->id) }}"
-                    class="text-danger text-decoration-none fw-semibold">Download PDF</a>
+                    class="text-danger text-decoration-none fw-semibold" target="_blank">Download PDF</a>
             </div>
         </div>
     </div>

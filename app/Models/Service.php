@@ -10,16 +10,10 @@ class Service extends Model
 {
     protected $table = 'services';
 
-    protected $fillable = [
-        'nama_service',
-        'deskripsi',
-        'harga',
-    ];
-
+    protected $fillable = ['nama_service', 'deskripsi', 'harga'];
 
     public function Transaksi(): HasMany
     {
         return $this->hasMany(Transaksi::class, 'id_service', 'id');
     }
-
 }

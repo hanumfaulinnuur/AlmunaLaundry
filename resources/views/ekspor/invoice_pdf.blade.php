@@ -85,7 +85,7 @@
             <p style="margin:5px 0;"><strong>{{ $transaksi->Service->nama_service ?? '-' }}</strong> <span
                     style="float:right;">Rp. {{ number_format($transaksi->Service->harga, 0, ',', '.') }}</span></p>
             <p style="margin:5px 0; color:#555; text-align:right">
-                {{ rtrim(rtrim(number_format($transaksi->total_berat, 1), '0'), '.') }} Kg</p>
+                {{ rtrim(rtrim(number_format($transaksi->total_berat, 1), '0'), '.') }} Kg / Item</p>
             <hr style="border: none; border-top: 1px solid #ccc;">
             <p style="margin:5px 0;"><span>Subtotal</span> <span style="float:right;">Rp.
                     {{ number_format($transaksi->total_harga, 0, ',', '.') }}</span></p>
@@ -96,13 +96,13 @@
         <hr style="border: none; border-top: 1px solid #ccc;">
 
         <div style="text-align:left; font-weight:bold;">
-            <p style="font-size:16px;"><span>Total Biaya</span> <span style="float:right;">Rp.
+            <p style="font-size:16px;"><span>Total Bayar</span> <span style="float:right;">Rp.
                     {{ number_format($transaksi->total_harga + ($pembayaran->biaya_admin ?? 0), 0, ',', '.') }}</span>
             </p>
         </div>
 
         <div class="signature">
-            <p>Terimakasih Atas Pembelian Anda</p>
+            <p>Terimakasih Atas Kepercayaan Anda</p>
             <img src="assets/front_asset/image/stamp.png" alt="">
             <p>Tim Almuna Laundry</p>
         </div>
