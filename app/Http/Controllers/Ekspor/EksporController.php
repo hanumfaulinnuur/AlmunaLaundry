@@ -28,6 +28,6 @@ class EksporController extends Controller
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
 
-        return Excel::download(new RekapOrderEkspor($startDate, $endDate), 'Rekap.xlsx');
+        return Excel::download(new RekapOrderEkspor($startDate, $endDate), 'Rekap Order.xlsx');
     }
 }

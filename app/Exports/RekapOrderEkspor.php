@@ -23,7 +23,7 @@ class RekapOrderEkspor implements FromCollection, WithHeadings, WithColumnWidths
 
     public function collection()
     {
-        $query = Transaksi::with(['Pelanggan', 'Service'])
+        $query = Transaksi::with(['Pelanggan', 'Service', 'Pembayaran'])
             ->where('status_transaksi', 'selesai');
 
         if ($this->startDate) {
@@ -44,31 +44,33 @@ class RekapOrderEkspor implements FromCollection, WithHeadings, WithColumnWidths
                     'tanggal_selesai' => Carbon::parse($transaksi->tanggal_selesai)->translatedFormat('l, d F Y'),
                     'total_berat' => rtrim(rtrim(number_format($transaksi->total_berat, 2, '.', ''), '0'), '.') . ' Kg',
                     'total_harga' => 'RP. ' . number_format($transaksi->total_harga, 0, ',', '.'),
+                    'metode_bayar' => $transaksi->Pembayaran->jenis_pembayaran ?? '-',
                 ];
             });
     }
 
     public function headings(): array
     {
-        return ['No Invoice', 'Nama', 'Jenis Service', 'Tanggal Order', 'Tanggal Selesai', 'Berat', 'Harga'];
+        return ['No Invoice', 'Nama', 'Jenis Service', 'Tanggal Order', 'Tanggal Selesai', 'Berat', 'Harga', 'Metode Pembayaran'];
     }
 
     public function columnWidths(): array
     {
         return [
-            'A' => 20, // No Invoice
-            'B' => 25, // Nama
-            'C' => 25, // Jenis Service
-            'D' => 25, // Tanggal Order
-            'E' => 25, // Tanggal Selesai
-            'F' => 15, // Berat
-            'G' => 20, // Harga
+            'A' => 20,
+            'B' => 25,
+            'C' => 25,
+            'D' => 25,
+            'E' => 25,
+            'F' => 15,
+            'G' => 20,
+            'G' => 25,
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
-        // Set column widths
+        
         $sheet->getColumnDimension('A')->setWidth(20);
         $sheet->getColumnDimension('B')->setWidth(25);
         $sheet->getColumnDimension('C')->setWidth(25);
@@ -76,24 +78,25 @@ class RekapOrderEkspor implements FromCollection, WithHeadings, WithColumnWidths
         $sheet->getColumnDimension('E')->setWidth(25);
         $sheet->getColumnDimension('F')->setWidth(15);
         $sheet->getColumnDimension('G')->setWidth(20);
+        $sheet->getColumnDimension('H')->setWidth(25);
 
-        // Header style
-        $sheet->getStyle('A1:G1')->getFont()->setBold(true);
-        $sheet->getStyle('A1:G1')->getAlignment()->setHorizontal('center');
-        $sheet->getStyle('A1:G1')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        
+        $sheet->getStyle('A1:H1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:H1')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('A1:H1')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
-        // Header background color (yellow)
-        $sheet->getStyle('A1:G1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
-        $sheet->getStyle('A1:G1')->getFill()->getStartColor()->setRGB('FFFF00');
+        
+        $sheet->getStyle('A1:H1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID);
+        $sheet->getStyle('A1:H1')->getFill()->getStartColor()->setRGB('00b3ff');
 
-        // Borders for data cells
-        $sheet->getStyle('A2:G' . $sheet->getHighestRow())
+        
+        $sheet->getStyle('A2:H' . $sheet->getHighestRow())
             ->getBorders()
             ->getAllBorders()
             ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
-        // Center align all cells in range
-        $sheet->getStyle('A2:G' . $sheet->getHighestRow())
+        
+        $sheet->getStyle('A2:H' . $sheet->getHighestRow())
             ->getAlignment()
             ->setHorizontal('center')
             ->setVertical('center');
