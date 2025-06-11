@@ -49,19 +49,21 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr class="text-center align-middle">
+                                <th scope="col">No</th>
                                 <th scope="col">No Invoice</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Jenis Service</th>
                                 <th scope="col">Tanggal Order</th>
                                 <th scope="col">Tanggal Selesai</th>
                                 <th scope="col">Berat</th>
-                                <th scope="col">Metode Bayar</th>
                                 <th scope="col">Harga</th>
+                                <th scope="col">Metode Bayar</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            @forelse ($listOrderSelesai as $item)
+                            @forelse ($listOrderSelesai as $key => $item)
                                 <tr class="text-center">
+                                    <th scope="row">{{ $listOrderSelesai->firstItem() + $key }}</th>
                                     <td>{{ $item->no_invoice }}</td>
                                     <td>{{ $item->Pelanggan->user->name ?? '-' }}</td>
                                     <td>{{ $item->Service->nama_service ?? '-' }}</td>
@@ -70,8 +72,8 @@
                                     <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->translatedFormat('l, d F Y') }}
                                     </td>
                                     <td>{{ rtrim(rtrim(number_format($item->total_berat, 2, '.', ''), '0'), '.') }} Kg</td>
-                                    <td>{{ $item->Pembayaran->jenis_pembayaran }}</td>
                                     <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
+                                    <td>{{ $item->Pembayaran->jenis_pembayaran }}</td>
                                 </tr>
                             @empty
                                 <tr>
