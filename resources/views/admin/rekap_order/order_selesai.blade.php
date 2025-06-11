@@ -55,6 +55,7 @@
                                 <th scope="col">Tanggal Order</th>
                                 <th scope="col">Tanggal Selesai</th>
                                 <th scope="col">Berat</th>
+                                <th scope="col">Metode Bayar</th>
                                 <th scope="col">Harga</th>
                             </tr>
                         </thead>
@@ -69,6 +70,7 @@
                                     <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->translatedFormat('l, d F Y') }}
                                     </td>
                                     <td>{{ rtrim(rtrim(number_format($item->total_berat, 2, '.', ''), '0'), '.') }} Kg</td>
+                                    <td>{{ $item->Pembayaran->jenis_pembayaran }}</td>
                                     <td>Rp. {{ number_format($item->total_harga, 0, ',', '.') }}</td>
                                 </tr>
                             @empty

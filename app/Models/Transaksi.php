@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transaksi extends Model
 {
-    protected $fillable = ['id_pelanggan', 'id_service', 'no_invoice', 'tanggal_order', 'tanggal_selesai', 'total_berat', 'total_harga', 'status_transaksi'];
+    protected $fillable = ['id_pelanggan', 'id_service', 'no_invoice', 'tanggal_order','proses_order' , 'tanggal_selesai', 'total_berat', 'total_harga', 'status_transaksi'];
     public function Pelanggan(): BelongsTo
     {
         return $this->belongsTo(Pelanggan::class, 'id_pelanggan', 'id');

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Order;
 
+use Midtrans\Config;
 use App\Models\Transaksi;
+use App\Models\Pembayaran;
+use App\Models\SaldoHistori;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class PembayaranController extends Controller
 {
@@ -63,7 +65,7 @@ class PembayaranController extends Controller
 
     public function midtransNotification(Request $request)
     {
-        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        Config::$serverKey = config('midtrans.server_key');
         \Midtrans\Config::$isProduction = false;
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
@@ -83,13 +85,10 @@ class PembayaranController extends Controller
         $biayaAdmin = max($grossAmount - $transaksi->total_harga, 0);
 
         if (in_array($status, ['capture', 'settlement'])) {
-            $existing = DB::table('pembayarans')
-                ->where('id_transaksi', $transaksiId)
-                ->where('jenis_pembayaran', 'midtrans')
-                ->first();
+            $existing = Pembayaran::where('id_transaksi', $transaksiId)->where('jenis_pembayaran', 'midtrans')->first();
 
             if (!$existing) {
-                DB::table('pembayarans')->insert([
+                Pembayaran::create([
                     'id_transaksi' => $transaksiId,
                     'jenis_pembayaran' => 'midtrans',
                     'status_pembayaran' => 'berhasil',
@@ -99,7 +98,7 @@ class PembayaranController extends Controller
                     'updated_at' => now(),
                 ]);
             } else {
-                DB::table('pembayarans')->where('id', $existing->id)->update([
+                Pembayaran::where('id', $existing->id)->update([
                     'status_pembayaran' => 'berhasil',
                     'biaya_admin' => $biayaAdmin,
                     'updated_at' => now(),
@@ -110,8 +109,7 @@ class PembayaranController extends Controller
                 'status_transaksi' => 'selesai',
             ]);
         } elseif (in_array($status, ['deny', 'cancel', 'expire'])) {
-            DB::table('pembayarans')
-                ->where('id_transaksi', $transaksiId)
+            Pembayaran::where('id_transaksi', $transaksiId)
                 ->where('jenis_pembayaran', 'midtrans')
                 ->update([
                     'status_pembayaran' => 'gagal',
@@ -128,14 +126,14 @@ class PembayaranController extends Controller
         $user = Auth::user();
         $pelanggan = $user->Pelanggan;
 
-         if ($pelanggan->deposit_saldo < $transaksi->total_harga) {
-        return back()->with('saldo_kurang', true);
-    }
+        if ($pelanggan->deposit_saldo < $transaksi->total_harga) {
+            return back()->with('saldo_kurang', true);
+        }
 
         $pelanggan->deposit_saldo -= $transaksi->total_harga;
         $pelanggan->save();
 
-        DB::table('saldo_historis')->insert([
+        SaldoHistori::create([
             'id_pelanggan' => $pelanggan->id,
             'nominal' => $transaksi->total_harga,
             'tanggal_transaksi' => now(),
@@ -144,7 +142,7 @@ class PembayaranController extends Controller
             'updated_at' => now(),
         ]);
 
-        DB::table('pembayarans')->insert([
+        Pembayaran::create([
             'id_transaksi' => $transaksi->id,
             'jenis_pembayaran' => 'saldo',
             'status_pembayaran' => 'berhasil',
@@ -163,7 +161,7 @@ class PembayaranController extends Controller
     {
         $transaksi = Transaksi::with('Service')->findOrFail($id);
 
-        DB::table('pembayarans')->insert([
+        Pembayaran::create([
             'id_transaksi' => $transaksi->id,
             'jenis_pembayaran' => 'cash',
             'status_pembayaran' => 'pending',
@@ -178,8 +176,7 @@ class PembayaranController extends Controller
 
     public function validasiCash($id)
     {
-        DB::table('pembayarans')
-            ->where('id_transaksi', $id)
+        Pembayaran::where('id_transaksi', $id)
             ->where('jenis_pembayaran', 'cash')
             ->update([
                 'status_pembayaran' => 'berhasil',
@@ -196,7 +193,7 @@ class PembayaranController extends Controller
     public function invoice($id)
     {
         $transaksi = Transaksi::with('Service')->findOrFail($id);
-        $pembayaran = DB::table('pembayarans')->where('id_transaksi', $id)->latest('tanggal_pembayaran')->first();
+        $pembayaran = Pembayaran::where('id_transaksi', $id)->latest('tanggal_pembayaran')->first();
 
         return view('order.invoice', compact('transaksi', 'pembayaran'));
     }

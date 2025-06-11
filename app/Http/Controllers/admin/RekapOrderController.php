@@ -14,7 +14,7 @@ class RekapOrderController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
-        $listOrderSelesai = Transaksi::with(['Pelanggan.user', 'Service'])
+        $listOrderSelesai = Transaksi::with(['Pelanggan.user', 'Service', 'Pembayaran'])
             ->where('status_transaksi', 'selesai')
             ->when($search, function ($query, $search) {
                 $query->whereHas('Pelanggan.user', function ($q) use ($search) {

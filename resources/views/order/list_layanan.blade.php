@@ -41,7 +41,7 @@
                 <div class="modal-content text-center">
                     <div class="modal-body p-5">
                         <h5 class="mb-4">Apakah kamu akan <br> Melakukan Order Berikut?</h5>
-                        <div class="d-flex justify-content-center gap-5">
+                        <div class="d-flex justify-content-center gap-3">
                             <button type="button" class="btn btn-outline-warning btn-modal"
                                 data-bs-dismiss="modal">Batal</button>
                             <button type="button" class="btn btn-order btn-modal" id="btnLanjut">Order</button>
